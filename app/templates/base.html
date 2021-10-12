@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	{# css #}
+	{# default css #}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+	{# custom page css #}
+	{% block css %}
+	{% endblock %}
+
+	{# title #}
+	{% if title %}
+	<title>{{ title }} - OpenLingo</title>
+	{% else %}
+	<title>Welcome to OpenLingo</title>
+	{% endif %}
+
+</head>
+<body>
+	<nav>
+		<a href="{{ url_for('main.index') }}">Index Page</a>
+		<a href="{{ url_for('main.hello') }}">Hello Page</a>
+	</nav>
+	{% block content %}
+	{% endblock %}	
+</body>
+</html>
