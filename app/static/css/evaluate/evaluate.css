@@ -10,14 +10,17 @@ body {
 h1 {
   color: black;
   align-self: center;
+  white-space: nowrap;
 }
 
 h4 {
   margin-top: 5px;
+  white-space: nowrap;
 }
 
 h5 {
   margin: 5px 0px 5px 0px;
+  white-space: nowrap;
 }
 
 select {
@@ -38,6 +41,7 @@ button {
   font-size: 18px;
   margin-left: 10px;
   height: fit-content;
+  white-space: nowrap;
 }
 
 button:hover {
@@ -106,4 +110,21 @@ img {
 .content-buttons {
   display: inline;
   white-space: nowrap;
+}
+
+.bottom-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: 20px 20px 20px 20px;
+}
+
+.level-present {
+  display: flex;
+  justify-content: center;
+}
+
+.level-present,
+h3 {
+  margin: 20px 15px 20px 15px;
 }
