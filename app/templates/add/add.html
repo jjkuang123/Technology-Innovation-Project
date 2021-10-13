@@ -1,19 +1,18 @@
 {% extends "base.html" %}
 
 {% block css %}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/search/search.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/add/add.css') }}">
 {% endblock %}
 
 {% block content %}
 	<div class="logo-container">
 		<img id="logo" src="/static/images/logo.png" alt="logo">
-
 	</div>
 
 	<div class="middle-container">
 		<div class="search-bar">
 			<p>Search using tags:</p>
-			<input type="text" id="search-input" name="search" value="">
+			<input type="text" id="search-input" name="search" class="text-input">
 		</div>
 
 		<div class="option-container">
@@ -28,13 +27,21 @@
 				<option value="Interm2">Intermediate 2</option>
 				<option value="Interm3">Intermediate 3</option>
 			</select>
-			<button> Search </button>
+
+			<div class="ratings-contianer">
+				<p>Understanding:</p>
+				<input type="range" name="understand-range" id="understand"
+				min="0" max="100">
+				<p>Usefulness:</p>
+				<input type="range" name="understand-range" id="usefulness"
+				min="0" max="5">
+			</div>
 		</div>
 	</div>
-
 	<div class="bottom-container">
+		<p>Provide a link to the resource:</p>
+		<input type="text" id="link-input" name="link" class="text-input">
 		<button id="add-button"> Add a new resource </button>
 	</div>
-
 
 {% endblock %}

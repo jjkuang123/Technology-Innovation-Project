@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/identify/identify.css') }}">
+{% endblock %}
+
+{% block content %}
+	<div class="logo-container">
+		<img id="logo" src="/static/images/logo.png" alt="logo">
+	</div>
+
+	<div class="middle-container">
+
+		<div class="option-container">
+            <div class="choose-language">
+                <h2> Choose a language to learn: </h2>
+                <select name="languages" id="language-select">
+                    <option value="French">French</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Mandarin">Mandarin</option>
+                    <option value="English">English</option>
+                </select>
+            </div>
+
+            <div class="choose-level">
+                <h2> Choose a level to start with: </h2>
+                <select name="skill-level" id="level-select">
+                    <option value="Interm1">Intermediate 1</option>
+                    <option value="Interm2">Intermediate 2</option>
+                    <option value="Interm3">Intermediate 3</option>
+                </select>
+            </div>
+		</div>
+	</div>
+
+	<div class="bottom-container">
+        <p>Add tags to look for relevant content:</p>
+		<input type="text" id="tag-input" name="link" class="tag-input">
+		<button id="evaluate-button"> Begin Evaluation </button>
+	</div>
+
+{% endblock %}

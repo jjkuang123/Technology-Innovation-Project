@@ -14,4 +14,16 @@ def create_app(config_class=Config):
     from app.search import bp as search_bp
     app.register_blueprint(search_bp)
 
+    # Add Page binding
+    from app.add import bp as add_bp
+    app.register_blueprint(add_bp)
+
+    # Identify Skill level binding
+    from app.identify import bp as identify_bp
+    app.register_blueprint(identify_bp)
+
+    # Results Feature binding
+    from app.results import bp as results_bp
+    app.register_blueprint(results_bp)
+
     return app

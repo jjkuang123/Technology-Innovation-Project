@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/results/results.css') }}">
+{% endblock %}
+
+{% block content %}
+	<div class="top-container">
+		<img id="logo" src="/static/images/logo.png" alt="logo">
+		<input type="text" id="search-input" name="search" value="">
+            <div class="option-container">
+                <select name="languages" id="language-select">
+                    <option value="French">French</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Mandarin">Mandarin</option>
+                    <option value="English">English</option>
+                </select>
+                <select name="skill-level" id="level-select">
+                    <option value="Interm1">Intermediate 1</option>
+                    <option value="Interm2">Intermediate 2</option>
+                    <option value="Interm3">Intermediate 3</option>
+                </select>
+                
+            </div>
+            <button> Search </button>
+
+	</div>
+
+	<div class="middle-container">
+		
+
+		
+	</div>
+
+
+
+{% endblock %}
