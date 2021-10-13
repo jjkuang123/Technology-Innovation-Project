@@ -10,4 +10,8 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    # Search Page binding
+    from app.search import bp as search_bp
+    app.register_blueprint(search_bp)
+
     return app
