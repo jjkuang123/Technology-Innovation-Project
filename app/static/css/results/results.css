@@ -8,7 +8,7 @@ body {
 }
 
 h1 {
-  color: white;
+  color: black;
 }
 
 select {
@@ -16,6 +16,7 @@ select {
   border-radius: 18px;
   font-size: 16px;
   height: max-content;
+  margin: 0px 10px 0px 10px;
 }
 
 button {
@@ -26,6 +27,8 @@ button {
   background-color: black;
   color: white;
   font-size: 18px;
+  margin-left: 10px;
+  height: fit-content;
 }
 
 button:hover {
@@ -37,23 +40,26 @@ p {
   margin-bottom: 5px;
 }
 
-#logo {
+img {
   max-width: 100%;
   max-height: 100%;
 }
 
 .top-container {
   display: flex;
+  flex-direction: row;
   height: 100px;
-  width: auto;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .middle-container {
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  width: 95%;
+  height: 80%;
 }
 
 #search-input {
@@ -69,37 +75,19 @@ p {
   padding-right: 20px;
 }
 
-#link-input {
-  font-size: 13px;
-  border-radius: 24px;
-  border: none;
-  box-shadow: none;
-  border: 1px solid #dfe1e5;
-  width: 400px;
-  z-index: 3;
-  height: 40px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.search-bar {
-  display: block;
-  justify-content: center;
-  width: auto;
-  margin: 25px 0px 25px 0px;
-}
-
-.option-container {
+/* Content Container */
+.content-container {
+  height: 120px;
   display: flex;
-  height: 130px;
+  justify-content: space-around;
   align-items: center;
-  justify-content: space-between;
 }
 
-.ratings-container {
-  display: block;
-  margin: 0 auto;
-  text-align: center;
+.metadata {
+}
+
+#resource-thumb {
+  height: 90%;
 }
 
 .bottom-container {
@@ -108,12 +96,4 @@ p {
   justify-content: center;
   align-content: space-between;
   margin: 20px 0px 50px 0px;
-}
-
-#add-button {
-  /* margin-top: 30px; */
-  justify-self: center;
-  width: 340px;
-  margin: 0 auto;
-  margin-top: 30px;
 }

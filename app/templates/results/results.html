@@ -8,30 +8,37 @@
 	<div class="top-container">
 		<img id="logo" src="/static/images/logo.png" alt="logo">
 		<input type="text" id="search-input" name="search" value="">
-            <div class="option-container">
-                <select name="languages" id="language-select">
-                    <option value="French">French</option>
-                    <option value="Spanish">Spanish</option>
-                    <option value="Mandarin">Mandarin</option>
-                    <option value="English">English</option>
-                </select>
-                <select name="skill-level" id="level-select">
-                    <option value="Interm1">Intermediate 1</option>
-                    <option value="Interm2">Intermediate 2</option>
-                    <option value="Interm3">Intermediate 3</option>
-                </select>
-                
-            </div>
-            <button> Search </button>
-
+        <select name="languages" id="language-select">
+            <option value="French">French</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Mandarin">Mandarin</option>
+            <option value="English">English</option>
+        </select>
+        <select name="skill-level" id="level-select">
+            <option value="Interm1">Intermediate 1</option>
+            <option value="Interm2">Intermediate 2</option>
+            <option value="Interm3">Intermediate 3</option>
+        </select>
+        <button> Search </button>
 	</div>
 
 	<div class="middle-container">
-		
+		<div class="content-container">
+            <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
+
+            <div class="metadata">
+                <h4> Bind Title here: Comment Merkel a rate la transition ecologique del'Allemagne </h4>
+                <h5> Intermediate 1 Learners on average had {78%} Average Comprehension </h5>
+                <h5> Average Usefulness Rating: 1/5 </h5>
+            </div>
+            <div class="content-buttons"> 
+                <button> Go to Comments </button>
+                <button> Save </button>
+            </div>
+        </div>
+        
 
 		
 	</div>
-
-
 
 {% endblock %}
