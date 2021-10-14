@@ -9,39 +9,57 @@
 		<img id="logo" src="/static/images/logo.png" alt="logo">
 	</div>
 
-	<div class="middle-container">
-		<div class="search-bar">
-			<p>Search using tags:</p>
-			<input type="text" id="search-input" name="search" class="text-input">
-		</div>
+	<form action="" method="post" novalidate="">
+		{{ form.hidden_tag() }}
+		<div class="middle-container">
+			<div class="search-bar">
+{# 				<p>Search using tags:</p>
+				<input type="text" id="search-input" name="search" class="text-input"> #}
+				{{ form.searchfield.label }}
+				{{ form.searchfield(class="text-input", id="search-input") }}
+			</div>
 
-		<div class="option-container">
-			<select name="languages" id="language-select">
-				<option value="French">French</option>
-				<option value="Spanish">Spanish</option>
-				<option value="Mandarin">Mandarin</option>
-				<option value="English">English</option>
-			</select>
-			<select name="skill-level" id="level-select">
-				<option value="Interm1">Intermediate 1</option>
-				<option value="Interm2">Intermediate 2</option>
-				<option value="Interm3">Intermediate 3</option>
-			</select>
+			<div class="option-container">
+{# 				<select name="languages" id="language-select">
+					<option value="French">French</option>
+					<option value="Spanish">Spanish</option>
+					<option value="Mandarin">Mandarin</option>
+					<option value="English">English</option>
+				</select>
+				<select name="skill-level" id="level-select">
+					<option value="Interm1">Intermediate 1</option>
+					<option value="Interm2">Intermediate 2</option>
+					<option value="Interm3">Intermediate 3</option>
+				</select> #}
+				{{ form.language(id="language-select") }}
+				{{ form.level(id="level-select") }}
 
-			<div class="ratings-contianer">
-				<p>Understanding:</p>
-				<input type="range" name="understand-range" id="understand"
-				min="0" max="100">
-				<p>Usefulness:</p>
-				<input type="range" name="understand-range" id="usefulness"
-				min="0" max="5">
+				<div class="ratings-contianer">
+{# 					<p>Understanding:</p>
+					<input type="range" name="understand-range" id="understand"
+					min="0" max="100">
+					<p>Usefulness:</p>
+					<input type="range" name="understand-range" id="usefulness"
+					min="0" max="5"> #}
+					{{ form.understanding.label }}<br>
+					{{ form.understanding(min='0', max='100', step='1') }}<br>
+
+					{{ form.usefulness.label }}<br>
+					{{ form.usefulness(min='0', max='5', step='1') }}
+
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="bottom-container">
-		<p>Provide a link to the resource:</p>
-		<input type="text" id="link-input" name="link" class="text-input">
-		<a href="" id="add-button"> Add resource </a>
-	</div>
+		<div class="bottom-container">
+{# 			<p>Provide a link to the resource:</p>
+			<input type="text" id="link-input" name="link" class="text-input">
+			<a href="" id="add-button"> Add resource </a> #}
+			{{ form.link.label }}
+			{{ form.link(id="link-input") }}<br>
+
+			{{ form.submit(id="add-button") }}
+
+		</div>
+	</form>
 
 {% endblock %}

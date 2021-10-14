@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>My Form</h1>
+	<form action="" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.searchfield.label }} 
+			{{ form.searchfield(size=32)}}
+		</p>
+		<p>
+			{{ form.clickme }} {{ form.clickme.label }}
+			{% for error in form.clickme.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+		</p>
+		<p>
+			{{ form.submit() }}
+		</p>
+	</form>
+{% endblock %}
