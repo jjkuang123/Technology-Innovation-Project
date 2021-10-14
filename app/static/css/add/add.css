@@ -34,6 +34,22 @@ button:hover {
   transform: translateY(0.25em);
 }
 
+a {
+  padding: 8px 16px;
+  border-radius: 18px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+a:hover {
+  background-color: rgb(177, 227, 190);
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(0.25em);
+}
+
 p {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -110,4 +126,5 @@ p {
   width: 340px;
   margin: 0 auto;
   margin-top: 30px;
+  text-align: center;
 }

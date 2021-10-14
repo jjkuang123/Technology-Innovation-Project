@@ -93,5 +93,10 @@ a:hover {
 }
 
 #add-button {
-  width: 420px;
+  /* margin-top: 30px; */
+  justify-self: center;
+  width: 340px;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: center;
 }
