@@ -18,7 +18,7 @@ select {
   font-size: 16px;
 }
 
-button {
+input[type="submit"] {
   padding: 8px 16px;
   border-radius: 18px;
   border: none;
@@ -27,7 +27,7 @@ button {
   font-size: 16px;
 }
 
-button:hover {
+input[type="submit"]:hover {
   background-color: rgb(177, 227, 190);
   box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
   transform: translateY(0.25em);

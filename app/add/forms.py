@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired
 
 
 class AddResourceForm(FlaskForm):
-    searchfield = StringField("Search using tags", validators=[DataRequired()])
+    addfield = StringField("Add appropriate tags", validators=[DataRequired()])
     language = SelectField("Language", choices=[(
         "fr", "French"), ("en", "English")], validators=[DataRequired()])
     level = SelectField("Level", choices=[(
@@ -13,4 +13,4 @@ class AddResourceForm(FlaskForm):
     understanding = IntegerRangeField("Understanding")
     usefulness = IntegerRangeField("Usefulness")
     link = StringField("Link to resource", validators=[DataRequired()])
-    submit = SubmitField("Search")
+    submit = SubmitField("Add")

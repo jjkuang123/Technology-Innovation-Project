@@ -1,3 +1,4 @@
+from app import evaluate
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.fields.html5 import IntegerRangeField
@@ -12,3 +13,7 @@ class NavigationForm(FlaskForm):
     level = SelectField("Level", choices=[(
         "in1", "Intermediate 1"), ("in2", "Intermediate 2")], validators=[DataRequired()])
     submit = SubmitField("Search")
+
+
+class BasicResourceForm(NavigationForm):
+    evaluate = SubmitField("Begin Evaluation")
