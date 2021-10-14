@@ -11,30 +11,30 @@
 	</div>
 
 	<div class="middle-container">
-		<div class="search-bar">
-			<p>Search using tags:</p>
-			<input type="text" id="search-input" name="search" value="">
-		</div>
-
-		<div class="option-container">
-			<select name="languages" id="language-select">
-				<option value="French">French</option>
-				<option value="Spanish">Spanish</option>
-				<option value="Mandarin">Mandarin</option>
-				<option value="English">English</option>
-			</select>
-			<select name="skill-level" id="level-select">
-				<option value="Interm1">Intermediate 1</option>
-				<option value="Interm2">Intermediate 2</option>
-				<option value="Interm3">Intermediate 3</option>
-			</select>
-			<button> Search </button>
-		</div>
+		<form action="">
+			<div class="search-bar">
+				<p>Search using tags:</p>
+				<input type="text" id="search-input" name="search" value="">
+			</div>
+	
+			<div class="option-container">
+				<select name="languages" id="language-select">
+					<option value="French">French</option>
+					<option value="Spanish">Spanish</option>
+					<option value="Mandarin">Mandarin</option>
+					<option value="English">English</option>
+				</select>
+				<select name="skill-level" id="level-select">
+					<option value="Interm1">Intermediate 1</option>
+					<option value="Interm2">Intermediate 2</option>
+					<option value="Interm3">Intermediate 3</option>
+				</select>
+				<button> Search </button>
+			</form>
 	</div>
 
 	<div class="bottom-container">
-		<!-- <button id="add-button" href> Add a new resource </button> -->
-		<a href="{{ url_for('add.add') }}">Add a new resource</a>
+		<a href="{{ url_for('add.add') }}" id="add-button">Add a new resource</a>
 	</div>
 
 
