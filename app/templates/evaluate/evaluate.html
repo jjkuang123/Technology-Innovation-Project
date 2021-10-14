@@ -7,7 +7,7 @@
 {% block content %}
 	<div class="top-container">
 		<img id="logo" src="/static/images/logo.png" alt="logo">
-		<input type="text" id="search-input" name="search" value="">
+{# 		<input type="text" id="search-input" name="search" value="">
         <select name="languages" id="language-select">
             <option value="French">French</option>
             <option value="Spanish">Spanish</option>
@@ -19,33 +19,42 @@
             <option value="Interm2">Intermediate 2</option>
             <option value="Interm3">Intermediate 3</option>
         </select>
-        <button> Search </button>
+        <button> Search </button> #}
+        <form action="" method="POST" novalidate="">
+            {{ form.hidden_tag() }}
+            {{ form.searchfield(id="search-input") }}
+            {{ form.language(id="language-select") }}
+            {{ form.level(id="level-select") }}
+            {{ form.submit() }}
+        </form>
 	</div>
 
 	<div class="middle-container">
         <h1>Rate these videos according to your level of comprehension: </h1>
         <!-- The following html is a 'component' for a row of a resource   -->
-		<div class="content-container">
-            <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
-            <div class="metadata">
-                <h4> Comment Merkel a rate la transition ecologique del'Allemagne </h4>
+        <form action="" method="POST">
+            {{ form_eval.hidden_tag() }}
+            {% for resource in range(1, 4) %} {# For loop #}
+        		<div class="content-container">
+                    <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
+                    <div class="metadata">
+                        <h4> Comment Merkel a rate la transition ecologique del'Allemagne </h4>
+                    </div>
+                    <div class="rating-dimension"> 
+                        <h5> Your Comprehension Rating: </h5>
+                        {{ form_eval.get_understanding(resource)() }}
+                    </div>
+                </div>
+                <!-- End of component -->
+            {% endfor %}
+            <div class="level-present">
+                <div class="bottom-container">
+                    {{ form_eval.submit() }}
+                </div>
+                <h3> Recommended level is: </h3>
+                <h3> { } </h3>
             </div>
-            <div class="rating-dimension"> 
-                <h5> Your Comprehension Rating: </h5>
-                <input type="range" name="understand-range" id="understand"
-				min="0" max="100">
-            </div>
-        </div>
-        <!-- End of component -->
-
-        <div class="bottom-container">
-            <button> Give me more content </button>
-            <button> Tell me my level</button>
-        </div>
-        <div class="level-present">
-            <h3> Recommended level is: </h3>
-            <h3> { } </h3>
-        </div>
+        </form>
 	</div>
 
 
