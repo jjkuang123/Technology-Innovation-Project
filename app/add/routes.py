@@ -6,7 +6,7 @@ from app.add.forms import AddResourceForm
 @bp.route('/add/', methods=['GET', 'POST'])
 def add():
     form = AddResourceForm()
-    if form.validate_on_submit:
+    if form.validate_on_submit():
         searchResult = form.searchfield.data
         print(searchResult)
     return render_template('add/add.html', title="Add Page", form=form)
