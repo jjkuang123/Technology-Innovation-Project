@@ -18,6 +18,12 @@ def add_rating(tx, rate):
 def add_understanding_level(tx, level):
     tx.run("CREATE (p:Understanding_level { level: $level}) ", level = level)
 
+def add_language(tx, language):
+    tx.run("CREATE (l:Language { language: $language}) ", language = language)
+
+def add_tag(tx, tag):
+    tx.run("CREATE (t:Tag { tag: $tag}) ", tag = tag)
+
 # def print_friends(tx, name):
 #     for record in tx.run("MATCH (a:Person) WHERE a.name STARTS WITH $name RETURN a", name=name): 
 #         print(record.data())
@@ -50,6 +56,11 @@ def create_relationship_COMMENT(tx, person, content):
 def create_relationship_COMMENT_DIRECTED_TO(tx, content, title):
     tx.run("MATCH (a:Comment), (m:Resources) WHERE a.content = $content AND m.title = $title CREATE (a)-[:DIRECTED]->(m) RETURN a, m", content=content, title=title)
 
+def create_relationship_LANGUAGE(tx, title, language):
+    tx.run("MATCH (l:Language), (r:Resources) WHERE l.language= $language AND r.title = $title CREATE (l)-[:LANGUAGE]->(r) RETURN r, l", title=title, language=language)
+
+def create_relationship_TAGGED(tx, title, tag):
+    tx.run("MATCH (t:Tag), (r:Resources) WHERE t.tag= $tag AND r.title = $title CREATE (t)-[:TAGGED]->(r) RETURN r, t", title=title, tag=tag)
 
 
 
@@ -107,8 +118,18 @@ with driver.session() as session:
     # session.read_transaction(create_relationship_HAS, "Jero Someone", '2 Hours of English Conversation Practice - Improve Speaking Skills')
     # session.read_transaction(create_relationship_HAS, "Jero Someone", 'The French Describe Their Weekend | Easy French 116')
 
-    
+    # session.read_transaction(add_language, "French")
 
+    # session.read_transaction(add_understanding_level, "Intermediate 1")
+    # session.read_transaction(add_understanding_level, "Intermediate 2")
+    # session.read_transaction(add_understanding_level, "Intermediate 3")
+
+    # session.read_transaction(create_relationship_LANGUAGE, '2 Hours of English Conversation Practice - Improve Speaking Skills', 'French')
+    # session.read_transaction(create_relationship_LANGUAGE, 'The French Describe Their Weekend | Easy French 116', 'French')
+
+    # session.read_transaction(add_tag, "Native")
+
+    # session.read_transaction(create_relationship_TAGGED, 'The French Describe Their Weekend | Easy French 116', 'Native')
 
 
 driver.close()
