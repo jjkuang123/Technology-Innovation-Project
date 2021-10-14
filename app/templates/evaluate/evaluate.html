@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block css %}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/results/results.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/evaluate/evaluate.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -23,23 +23,31 @@
 	</div>
 
 	<div class="middle-container">
-        <h1> Search Results: </h1>
+        <h1>Rate these videos according to your level of comprehension: </h1>
         <!-- The following html is a 'component' for a row of a resource   -->
 		<div class="content-container">
             <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
             <div class="metadata">
-                <h4> Bind Title here: Comment Merkel a rate la transition ecologique del'Allemagne </h4>
-                <h5> Intermediate 1 Learners on average had {78%} Average Comprehension </h5>
-                <h5> Average Usefulness Rating: 1/5 </h5>
+                <h4> Comment Merkel a rate la transition ecologique del'Allemagne </h4>
             </div>
-            <div class="content-buttons"> 
-                <button> Go to Comments </button>
-                <button> Save </button>
+            <div class="rating-dimension"> 
+                <h5> Your Comprehension Rating: </h5>
+                <input type="range" name="understand-range" id="understand"
+				min="0" max="100">
             </div>
         </div>
         <!-- End of component -->
-        	
-        
+
+        <div class="bottom-container">
+            <button> Give me more content </button>
+            <button> Tell me my level</button>
+        </div>
+        <div class="level-present">
+            <h3> Recommended level is: </h3>
+            <h3> { } </h3>
+        </div>
 	</div>
+
+
 
 {% endblock %}

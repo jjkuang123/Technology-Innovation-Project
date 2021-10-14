@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block css %}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/results/results.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/comments/comments.css') }}">
 {% endblock %}
 
 {% block content %}
@@ -23,23 +23,32 @@
 	</div>
 
 	<div class="middle-container">
-        <h1> Search Results: </h1>
+        <h2>Comments: </h2>
         <!-- The following html is a 'component' for a row of a resource   -->
 		<div class="content-container">
             <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
             <div class="metadata">
-                <h4> Bind Title here: Comment Merkel a rate la transition ecologique del'Allemagne </h4>
+                <h4> Comment Merkel a rate la transition ecologique del'Allemagne </h4>
                 <h5> Intermediate 1 Learners on average had {78%} Average Comprehension </h5>
-                <h5> Average Usefulness Rating: 1/5 </h5>
+                <h5> Average Usefulness Rating: {1/5} </h5>
             </div>
             <div class="content-buttons"> 
-                <button> Go to Comments </button>
                 <button> Save </button>
             </div>
         </div>
         <!-- End of component -->
-        	
-        
+        <!-- Start row of comments -->
+        <div class="comment-container">
+            <h3>User: {username}</h3>
+            <h4> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus rem quidem nemo corrupti laborum, deleniti eligendi sint consequuntur facere harum ratione ullam soluta</h4>
+        </div>
+        <div class="comment-container">
+            <h3>User: {username}</h3>
+            <h4> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Natus rem quidem nemo corrupti laborum, deleniti eligendi sint consequuntur facere harum ratione ullam soluta</h4>
+        </div>
+        <!-- End of comment row -->
+
+		
 	</div>
 
 {% endblock %}
