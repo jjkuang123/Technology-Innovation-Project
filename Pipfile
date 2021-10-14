@@ -6,6 +6,9 @@ name = "pypi"
 [packages]
 flask = "*"
 python-dotenv = "*"
+neo4j = "*"
+py2neo = "*"
+flask-wtf = "*"
 
 [dev-packages]
 
