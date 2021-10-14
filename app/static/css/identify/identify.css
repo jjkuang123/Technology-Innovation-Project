@@ -7,10 +7,6 @@ body {
   font-family: "Helvetica";
 }
 
-h1 {
-  color: white;
-}
-
 select {
   padding: 8px 16px;
   border-radius: 18px;
@@ -19,7 +15,7 @@ select {
   margin-left: 24px;
 }
 
-button {
+input[type="submit"] {
   padding: 8px 16px;
   width: 420px;
   border-radius: 18px;
@@ -29,7 +25,7 @@ button {
   font-size: 16px;
 }
 
-button:hover {
+input[type="submit"]:hover {
   background-color: rgb(177, 227, 190);
   box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
   transform: translateY(0.25em);
@@ -72,13 +68,6 @@ p {
   padding-right: 20px;
 }
 
-.search-bar {
-  display: flex;
-  justify-content: center;
-  width: auto;
-  margin: 25px 0px 25px 0px;
-}
-
 .choose-language {
   display: flex;
   align-items: center;
@@ -89,20 +78,6 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.option-container {
-  display: flex;
-  padding: 5px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.ratings-container {
-  display: block;
-  margin: 0 auto;
-  text-align: center;
 }
 
 .bottom-container {

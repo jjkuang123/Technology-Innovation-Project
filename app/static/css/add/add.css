@@ -7,10 +7,6 @@ body {
   font-family: "Helvetica";
 }
 
-h1 {
-  color: white;
-}
-
 select {
   padding: 8px 16px;
   border-radius: 18px;
@@ -18,7 +14,7 @@ select {
   height: max-content;
 }
 
-button {
+input[type="submit"] {
   padding: 8px 16px;
   width: 420px;
   border-radius: 18px;
@@ -28,31 +24,10 @@ button {
   font-size: 16px;
 }
 
-button:hover {
+input[type="submit"]:hover {
   background-color: rgb(177, 227, 190);
   box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
   transform: translateY(0.25em);
-}
-
-a {
-  padding: 8px 16px;
-  border-radius: 18px;
-  border: none;
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-a:hover {
-  background-color: rgb(177, 227, 190);
-  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-  transform: translateY(0.25em);
-}
-
-p {
-  margin-top: 5px;
-  margin-bottom: 5px;
 }
 
 .logo-container {
@@ -101,7 +76,7 @@ p {
 
 .option-container {
   display: flex;
-  height: 130px;
+  height: 80px;
   align-items: center;
   justify-content: space-between;
 }

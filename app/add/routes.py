@@ -7,6 +7,6 @@ from app.add.forms import AddResourceForm
 def add():
     form = AddResourceForm()
     if form.validate_on_submit:
-        searchResult = form.searchfield.data
-        print(searchResult)
+        addResult = form.addfield.data
+        print(addResult)
     return render_template('add/add.html', title="Add Page", form=form)
