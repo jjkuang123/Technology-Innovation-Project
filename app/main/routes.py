@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for
 from app.main import bp
 
 # Forms
-from app.main.forms import BasicForm
+from app.main.main_forms import BasicForm
 
 
 @bp.route('/')

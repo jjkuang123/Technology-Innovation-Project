@@ -9,34 +9,27 @@
 		<img id="logo" src="/static/images/logo.png" alt="logo">
 	</div>
 
-	<div class="middle-container">
+    <form action="" method="post" novalidate="">
+        {{ form.hidden_tag() }}
+        <div class="middle-container">
+            <div class="option-container">
+                <div class="choose-language">
+                     <h2> Choose a language to learn: </h2>
+                    {{ form.language(id="language-select") }}
+                </div>
 
-		<div class="option-container">
-            <div class="choose-language">
-                <h2> Choose a language to learn: </h2>
-                <select name="languages" id="language-select">
-                    <option value="French">French</option>
-                    <option value="Spanish">Spanish</option>
-                    <option value="Mandarin">Mandarin</option>
-                    <option value="English">English</option>
-                </select>
+                 <div class="choose-level">
+                    <h2> Choose a level to start with: </h2>
+                    {{ form.level(id="level-select") }}
+                </div> 
             </div>
+        </div>
 
-            <div class="choose-level">
-                <h2> Choose a level to start with: </h2>
-                <select name="skill-level" id="level-select">
-                    <option value="Interm1">Intermediate 1</option>
-                    <option value="Interm2">Intermediate 2</option>
-                    <option value="Interm3">Intermediate 3</option>
-                </select>
-            </div>
-		</div>
-	</div>
-
-	<div class="bottom-container">
-        <p>Add tags to look for relevant content:</p>
-		<input type="text" id="tag-input" name="link" class="tag-input">
-		<button id="evaluate-button"> Begin Evaluation </button>
-	</div>
+        <div class="bottom-container">
+            <p>Add tags to look for relevant content:</p>
+            {{ form.searchfield(class="tag-input", id="tag-input")}}
+            {{ form.evaluate(id="evaluate-button") }}
+        </div>
+    </form>
 
 {% endblock %}
