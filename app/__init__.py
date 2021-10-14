@@ -34,4 +34,8 @@ def create_app(config_class=Config):
     from app.repository import bp as repository_bp
     app.register_blueprint(repository_bp)
 
+    # Comments to a resource binding 
+    from app.comments import bp as comments_bp 
+    app.register_blueprint(comments_bp)
+
     return app
