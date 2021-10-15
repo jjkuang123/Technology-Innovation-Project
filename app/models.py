@@ -108,6 +108,28 @@ def find_relationship(tx, action=None, person=None, title=None, rate=0, content=
     return result.value()
 
 
+# def search(tx, language, level, tag): 
+#     resources = []
+#     for i in tag:
+#         result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) WHERE l.language= $language WITH r MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) WHERE t.level= $level WITH r MATCH (r:Resources)<-[:TAGGED]-(t:Tag) WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = i) 
+#         print(result.value()) 
+#     return result.value()
+
+def search(tx, language, level, tag): 
+    resources = []
+    for a in tag:
+        result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) WHERE l.language= $language WITH r MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) WHERE t.level= $level WITH r MATCH (r:Resources)<-[:TAGGED]-(t:Tag) WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = a)
+        for i in result:
+            add = True
+            for j in resources:
+                if (i["resource"].get("link") == j.get("link")):
+                    # print(i["resource"].get("link"))
+                    # print(j.get("link"))
+                    add = False
+            if (add == True):        
+                resources.append(i["resource"])
+    return resources
+
 #-------------------------------------------------------------- Process API Request ---------------------------------------------------------------------------------#
 def init_db(session): 
     '''Add pre-defined language and understanding level to db at the start. 
@@ -232,39 +254,70 @@ with driver.session() as session:
     
 
     # Only need to run once to initialize database
-    init_db(session)
+    # init_db(session)
     
-    process_add_user(session, "Jacky Kuang")
-    process_add_user(session, "Sandon Lai")
-    process_add_user(session, "Leon Wu")
-    process_add_user(session, "Jero Someone")
+    
+    # process_add_user(session, "Jacky Kuang")
+    # process_add_user(session, "Sandon Lai")
+    # process_add_user(session, "Leon Wu")
+    # process_add_user(session, "Jero Someone")
     
 
-    process_add_resources_to_db(session, "Jacky Kuang", '2 Hours of English Conversation Practice - Improve Speaking Skills', 'https://www.youtube.com/watch?v=NNamZZsggM4', "English")
-    process_add_resources_to_db(session, "Sandon Lai", 'The French Describe Their Weekend | Easy French 116', 'https://www.youtube.com/watch?v=unmu4yKfBg0', "French")
+    # process_add_resources_to_db(session, "Jacky Kuang", '2 Hours of English Conversation Practice - Improve Speaking Skills', 'https://www.youtube.com/watch?v=NNamZZsggM4', "English")
+    # process_add_resources_to_db(session, "Sandon Lai", 'The French Describe Their Weekend | Easy French 116', 'https://www.youtube.com/watch?v=unmu4yKfBg0', "French")
     
-    process_add_resources_to_own_repo(session, "Jacky Kuang", '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    process_add_resources_to_own_repo(session, "Sandon Lai", 'The French Describe Their Weekend | Easy French 116')
-    process_add_resources_to_own_repo(session, "Sandon Lai", '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    process_add_resources_to_own_repo(session, "Leon Wu", 'The French Describe Their Weekend | Easy French 116')
-    process_add_resources_to_own_repo(session, "Jero Someone", '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_add_resources_to_own_repo(session, "Jacky Kuang", '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_add_resources_to_own_repo(session, "Sandon Lai", 'The French Describe Their Weekend | Easy French 116')
+    # process_add_resources_to_own_repo(session, "Sandon Lai", '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_add_resources_to_own_repo(session, "Leon Wu", 'The French Describe Their Weekend | Easy French 116')
+    # process_add_resources_to_own_repo(session, "Jero Someone", '2 Hours of English Conversation Practice - Improve Speaking Skills')
     
-    process_comment(session, "Jacky Kuang", "I love this video, I learned a lot of words from it.", '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    process_comment(session, "Sandon Lai", "This video is not really for me, its too simple.", '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    process_comment(session, "Jacky Kuang", "This video is not really for me, its too hard.", 'The French Describe Their Weekend | Easy French 116')
-    process_comment(session, "Leon Wu", "Great video", 'The French Describe Their Weekend | Easy French 116')
+    # process_comment(session, "Jacky Kuang", "I love this video, I learned a lot of words from it.", '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_comment(session, "Sandon Lai", "This video is not really for me, its too simple.", '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_comment(session, "Jacky Kuang", "This video is not really for me, its too hard.", 'The French Describe Their Weekend | Easy French 116')
+    # process_comment(session, "Leon Wu", "Great video", 'The French Describe Their Weekend | Easy French 116')
 
-    process_assign_language(session, '2 Hours of English Conversation Practice - Improve Speaking Skills', 'English')
-    process_assign_language(session, 'The French Describe Their Weekend | Easy French 116', 'French')
+    # process_assign_language(session, '2 Hours of English Conversation Practice - Improve Speaking Skills', 'English')
+    # process_assign_language(session, 'The French Describe Their Weekend | Easy French 116', 'French')
 
-    process_add_level(session, "Intermediate 1", '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
+    # process_add_level(session, "Intermediate 1", '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
     
+    # session.read_transaction(add_tag, "Native")
+
+    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Native")
+
+    # session.read_transaction(add_tag, "Funny")
+    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Funny")
+
+    # session.read_transaction(add_tag, "Conversation")
+    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Conversation")
+    
+<<<<<<< Updated upstream
     process_rate(session, "Jacky Kuang", 5, '2 Hours of English Conversation Practice - Improve Speaking Skills')
     process_rate(session, "Sandon Lai", 1, '2 Hours of English Conversation Practice - Improve Speaking Skills')
     
     
     
+=======
+    # process_add_resources_to_db(session, "Leon2", 'French Video', 'https://www.youtube.com', "French")
+
+    # process_assign_language(session, 'French Video', 'French')
+
+    # session.read_transaction(create_relationship_TAGGED, "French Video", "Conversation")
+    # process_add_level(session, "Intermediate 2", 'French Video')
+
+
+    tags = ["Native", "Funny", "Conversation"]
+    # session.read_transaction(search, "French", "Intermediate 2", tags)
+    # session.read_transaction(search, "French", "Intermediate 2", tags)
+    resources = session.read_transaction(search, "French", "Intermediate 2", tags)
+
+    for resource in resources:
+        print(resource.get("title"))
+
+
+>>>>>>> Stashed changes
 
 driver.close()
 
