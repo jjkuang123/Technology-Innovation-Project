@@ -7,19 +7,6 @@
 {% block content %}
 	<div class="top-container">
 		<img id="logo" src="/static/images/logo.png" alt="logo">
-{# 		<input type="text" id="search-input" name="search" value="">
-        <select name="languages" id="language-select">
-            <option value="French">French</option>
-            <option value="Spanish">Spanish</option>
-            <option value="Mandarin">Mandarin</option>
-            <option value="English">English</option>
-        </select>
-        <select name="skill-level" id="level-select">
-            <option value="Interm1">Intermediate 1</option>
-            <option value="Interm2">Intermediate 2</option>
-            <option value="Interm3">Intermediate 3</option>
-        </select>
-        <button> Search </button> #}
         <form action="" method="POST" novalidate="">
             {{ form.hidden_tag() }}
             {{ form.searchfield(id="search-input") }}
@@ -32,19 +19,21 @@
 	<div class="middle-container">
         <h1>My Repository: </h1>
         <!-- The following html is a 'component' for a row of a resource   -->
+        {% for resource in resources %}
 		<div class="content-container">
             <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
             <div class="metadata">
-                <h4> Comment Merkel a rate la transition ecologique del'Allemagne </h4>
-                <h5> Intermediate 1 Learners on average had {78%} Average Comprehension </h5>
-                <h5> Average Usefulness Rating: {1/5} </h5>
+                <h4> {{ resource.get_title() }} </h4>
+                <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }}% Average Comprehension </h5>
+                <h5> Average Usefulness Rating: {{ resource.get_usefulness(1) }}/5 </h5>
                 <h5> My tags: {} {} {} </h5>
             </div>
             <div class="content-buttons"> 
-                <button> Go to Comments </button>
+                <a href="{{ url_for('comments.comments', resource_id=resource.id) }}">Go to comments</a>
                 <button> Unsave </button>
             </div>
         </div>
+        {% endfor %}
         <!-- End of component -->
         
 	</div>

@@ -12,6 +12,7 @@ class Resource():
         # Logic for getting a usefulness on a level
         return 3
 
+    ## def get_user_tags() 
 
 class Video(Resource):
     def __init__(self, *args):
