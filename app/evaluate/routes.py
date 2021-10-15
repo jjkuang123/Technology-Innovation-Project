@@ -1,17 +1,19 @@
 from flask import render_template, redirect, url_for, request, current_app
-from app.forms import NavigationForm
+from app.forms import NavigationForm, return_search_query
 from app.evaluate.evaluate_forms import EvaluateForm
 from app.evaluate import bp
 
 
 @bp.route('/evaluate/', methods=['GET', 'POST'])
-def evaluate():
+@bp.route('/evaluate/<search_query>', methods=['GET', 'POST'])
+def evaluate(search_query=None):
     form = NavigationForm()
     form_eval = EvaluateForm()
     if form.validate_on_submit():
-        query = form.searchfield.data
-        current_app.logger.info(f"Inside validated form, with query: {query}")
+        query = return_search_query(form)
         return redirect(url_for('results.results', search_query=query))
+
+    # Logic for processing que search_query
 
     current_app.logger.info("about to validate form")
     if form_eval.validate_on_submit():
@@ -22,5 +24,7 @@ def evaluate():
         current_app.logger.info(
             f"{understanding_1}, {understanding_2}, {understanding_3}")
 
-    # return render_template('results/results.html', title="Results Page", form=form)
-    return render_template('evaluate/evaluate.html', title="Evaluate Level", form=form, form_eval=form_eval)
+        # Lgic for rating level based on understandings
+
+    return render_template('evaluate/evaluate.html',
+                           title="Evaluate Level", form=form, form_eval=form_eval)

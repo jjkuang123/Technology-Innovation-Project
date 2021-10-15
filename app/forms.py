@@ -17,3 +17,11 @@ class NavigationForm(FlaskForm):
 
 class BasicResourceForm(NavigationForm):
     evaluate = SubmitField("Begin Evaluation")
+
+
+def return_search_query(form: NavigationForm) -> str:
+    searchResult = form.searchfield.data
+    level = form.level.data
+    language = form.language.data
+    query = f"{searchResult}?&={level}?&={language}"
+    return query

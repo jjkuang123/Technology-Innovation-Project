@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, current_app
 from app.add import bp
 from app.add.forms import AddResourceForm
 
@@ -7,6 +7,19 @@ from app.add.forms import AddResourceForm
 def add():
     form = AddResourceForm()
     if form.validate_on_submit:
-        addResult = form.addfield.data
-        print(addResult)
+        tags = form.addfield.data
+        language = form.language.data
+        level = form.level.data
+        understanding = form.understanding.data
+        usefulness = form.usefulness.data
+        link = form.link.data
+        current_app.logger.info(f"""
+                                Tag: {tags}
+                                Lng: {language}
+                                Lvl: {level}
+                                Und: {understanding}
+                                Use: {usefulness}
+                                Lnk: {link}
+                                """)
+
     return render_template('add/add.html', title="Add Page", form=form)

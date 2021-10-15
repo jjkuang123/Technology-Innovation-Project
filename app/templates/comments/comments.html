@@ -6,20 +6,14 @@
 
 {% block content %}
 	<div class="top-container">
-		<img id="logo" src="/static/images/logo.png" alt="logo">
-		<input type="text" id="search-input" name="search" value="">
-        <select name="languages" id="language-select">
-            <option value="French">French</option>
-            <option value="Spanish">Spanish</option>
-            <option value="Mandarin">Mandarin</option>
-            <option value="English">English</option>
-        </select>
-        <select name="skill-level" id="level-select">
-            <option value="Interm1">Intermediate 1</option>
-            <option value="Interm2">Intermediate 2</option>
-            <option value="Interm3">Intermediate 3</option>
-        </select>
-        <button> Search </button>
+        <img id="logo" src="/static/images/logo.png" alt="logo">
+        <form action="" method="POST" novalidate="">
+            {{ form.hidden_tag() }}
+            {{ form.searchfield(id="search-input") }}
+            {{ form.language(id="language-select") }}
+            {{ form.level(id="level-select") }}
+            {{ form.submit() }}
+        </form>
 	</div>
 
 	<div class="middle-container">
