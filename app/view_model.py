@@ -1,4 +1,8 @@
-
+import urllib.request
+import json
+import urllib
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 class Resource():
     def __init__(self, id, link):
@@ -22,8 +26,21 @@ class Video(Resource):
 
     def get_thumbnail(self):
         # Logic to set thumbnail if not in the database
-        return '/static/images/testthumbnail.jpeg'
+        # extract video_id
+        video_id = '8nzRXxPnlPQ'
+        return f'http://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
 
     def get_title(self):
         # Logic to get the title
-        return "Comment Merkel a rate la transition ecologique del'Allemagne "
+
+        # need to obtain video_id from the link or just replace the url with the video link
+        video_id = "8nzRXxPnlPQ" 
+        params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % video_id}
+        url = "https://www.youtube.com/oembed"
+        query_string = urllib.parse.urlencode(params)
+        url = url + "?" + query_string
+
+        with urllib.request.urlopen(url) as response:
+            response_text = response.read()
+            data = json.loads(response_text.decode())
+        return data['title']
