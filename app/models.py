@@ -293,13 +293,11 @@ with driver.session() as session:
     # session.read_transaction(add_tag, "Conversation")
     # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Conversation")
     
-<<<<<<< Updated upstream
-    process_rate(session, "Jacky Kuang", 5, '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    process_rate(session, "Sandon Lai", 1, '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_rate(session, "Jacky Kuang", 5, '2 Hours of English Conversation Practice - Improve Speaking Skills')
+    # process_rate(session, "Sandon Lai", 1, '2 Hours of English Conversation Practice - Improve Speaking Skills')
     
     
     
-=======
     # process_add_resources_to_db(session, "Leon2", 'French Video', 'https://www.youtube.com', "French")
 
     # process_assign_language(session, 'French Video', 'French')
@@ -317,7 +315,6 @@ with driver.session() as session:
         print(resource.get("title"))
 
 
->>>>>>> Stashed changes
 
 driver.close()
 
