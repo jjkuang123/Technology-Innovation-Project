@@ -93,9 +93,12 @@ def find_comment(tx, content):
 #-------------------------------------------------------------- Process API Request ---------------------------------------------------------------------------------#
 def init_db(session):
 
-    # Initialize constrains.
-    session.read_transaction(create_constrain_person)
-    session.read_transaction(create_constrain_resources)
+    try:
+        # Initialize constrains.
+        session.read_transaction(create_constrain_person)
+        session.read_transaction(create_constrain_resources)
+    except:
+        pass
 
     # Initialize pre-defined language in the system.
     session.read_transaction(add_language, "French")
@@ -163,7 +166,6 @@ def process_rate(session, username, rate, title):
 def process_assign_language(session, title, language):
     language_assign_to_re = find_relationship(tx=session, language=language, title=title, action='LANGUAGE')
     if len(language_assign_to_re) ==0:
-        print('languaghe gere')
         session.read_transaction(create_relationship_LANGUAGE, title, language)
     else:
         print('Language ' + language + ' already assigned to ' + title )
@@ -177,10 +179,8 @@ def process_add_tag(session, tag, title):
         print('Tag ' + tag + ' already assigned to ' + title )
 
 def process_add_level(session, level, title):
-    tag_assign_to_re = find_relationship(tx=session, title=title, action='LEVEL', level = level)
-    if len(tag_assign_to_re) ==0:
-        print('level gere')
-        session.read_transaction(add_language, level)
+    level_assign_to_re = find_relationship(tx=session, title=title, action='LEVEL', level = level)
+    if len(level_assign_to_re) ==0:
         session.read_transaction(create_relationship_LEVEL, title, level)
     else:
         print('Tag ' + level + ' already assigned to ' + title )
@@ -192,7 +192,7 @@ def process_add_level(session, level, title):
 with driver.session() as session:
 
     # Only need to run once to initialize database
-    
+    init_db(session)
     
     process_add_user(session, "Jacky Kuang")
     process_add_user(session, "Sandon Lai")
@@ -219,6 +219,7 @@ with driver.session() as session:
 
     process_add_level(session, "Intermediate 1", '2 Hours of English Conversation Practice - Improve Speaking Skills')
     process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
+    
 
 
 driver.close()
