@@ -283,32 +283,8 @@ with driver.session() as session:
     # process_add_level(session, "Intermediate 1", '2 Hours of English Conversation Practice - Improve Speaking Skills')
     # process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
     
-    # session.read_transaction(add_tag, "Native")
-
-    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Native")
-
-    # session.read_transaction(add_tag, "Funny")
-    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Funny")
-
-    # session.read_transaction(add_tag, "Conversation")
-    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Conversation")
-    
-    # process_rate(session, "Jacky Kuang", 5, '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    # process_rate(session, "Sandon Lai", 1, '2 Hours of English Conversation Practice - Improve Speaking Skills')
-    
-    
-    
-    # process_add_resources_to_db(session, "Leon2", 'French Video', 'https://www.youtube.com', "French")
-
-    # process_assign_language(session, 'French Video', 'French')
-
-    # session.read_transaction(create_relationship_TAGGED, "French Video", "Conversation")
-    # process_add_level(session, "Intermediate 2", 'French Video')
-
 
     tags = ["Native", "Funny", "Conversation"]
-    # session.read_transaction(search, "French", "Intermediate 2", tags)
-    # session.read_transaction(search, "French", "Intermediate 2", tags)
     resources = session.read_transaction(search, "French", "Intermediate 2", tags)
 
     for resource in resources:
