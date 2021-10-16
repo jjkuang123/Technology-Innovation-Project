@@ -49,10 +49,10 @@
         },
         "interchange": {
             "hashes": [
-                "sha256:2742835351d4576749095d4d02184d1f35ba480bb6a5e6c082d3d5f4e0be14b5",
-                "sha256:e7f2bbacee52ce7a3fc90bbeba8c8bef0bc3a2edea750ffefec9a12cf34cbd3f"
+                "sha256:3a791b4df765c7136c318e53c388380ac5b003767808876c4fb4fef393917768",
+                "sha256:6791d1b34621e990035fe75d808523172340d80ade1b50412226820184199550"
             ],
-            "version": "==2021.0.3"
+            "version": "==2021.0.4"
         },
         "itsdangerous": {
             "hashes": [
@@ -161,11 +161,11 @@
         },
         "py2neo": {
             "hashes": [
-                "sha256:980c5556e50b2cc8c4b77e2041ea0b5dca085fee795052e24b4b5de3dbf1bf5e",
-                "sha256:fd9016d2291ce3fd2079aaf0b7a57983106855957fe9cce3cd9701f85397aac9"
+                "sha256:39c55614acdc00cbd4b2c9a43a2c7d1af81b92684da390f5501d844162a52173",
+                "sha256:92bed6c03ed9c1068085c18e1f5af9313ddb25e9e441525cd856839a34c1e31a"
             ],
             "index": "pypi",
-            "version": "==2021.2.1"
+            "version": "==2021.2.3"
         },
         "pygments": {
             "hashes": [

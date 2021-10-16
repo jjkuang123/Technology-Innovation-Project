@@ -18,13 +18,13 @@
 
 	<div class="middle-container">
         <h1> Search Results: </h1>
-        <!-- The following html is a 'component' for a row of a resource   -->
+        <!-- The following html is a 'component' for a row of a resource   "/static/images/testthumbnail.jpeg"-->
         {% for resource in resources %}
     		<div class="content-container">
-                <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
+                <img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail">
                 <div class="metadata">
                     <h4> {{ resource.get_title() }} </h4>
-                    <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }} Average Comprehension </h5>
+                    <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }}% Average Comprehension </h5>
                     <h5> Average Usefulness Rating: {{ resource.get_usefulness(1) }}/5 </h5>
                 </div>
                 <div class="content-buttons"> 
