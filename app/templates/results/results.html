@@ -29,7 +29,8 @@
                 </div>
                 <div class="content-buttons"> 
                     <a href="{{ url_for('comments.comments', resource_id=resource.id) }}">Go to comments</a>
-                    <button> Save </button>
+                    {% include 'subtemplates/_save_button.html' %}
+                    {# <button> Save </button> #}
                 </div>
             </div>
         {% endfor %}
