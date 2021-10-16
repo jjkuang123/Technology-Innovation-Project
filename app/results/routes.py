@@ -22,4 +22,5 @@ def results(search_query=None):
         query = return_search_query(form)
         return redirect(url_for('results.results', search_query=query))
 
-    return render_template('results/results.html', title="Results Page", form=form, resources=resources)
+    return render_template('results/results.html', title="Results Page",
+                           form=form, resources=resources)

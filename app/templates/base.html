@@ -11,6 +11,27 @@
 	{% block css %}
 	{% endblock %}
 
+	{# jquery #}
+	{% block scripts %}	
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script>
+  			$SCRIPT_ROOT = {{ request.script_root|tojson }};
+		</script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/save.js') }}"></script>
+{# 		<script>
+			function save(sourceElem, resourceID) {
+    			$(sourceElem).html('<img src="{{ url_for('static', filename='images/loading.gif') }}">');
+    			$.post('/save_resource', {
+        			resource_id: resourceID
+    			}).done(function(response) {
+        			$(sourceElem).html('saved')
+    			}).fail(function() {
+        			$(sourceElem).text("'Error: Could not save resource.'");
+    			});
+			}
+		</script> #}
+	{% endblock %}
+
 	{# title #}
 	{% if title %}
 	<title>{{ title }} - OpenLingo</title>
@@ -20,6 +41,7 @@
 
 </head>
 <body>
+
 	<nav>
 		<a href="{{ url_for('main.index') }}">Index Page</a>
 		<a href="{{ url_for('search.search') }}">Search Page</a>
