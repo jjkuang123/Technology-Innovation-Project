@@ -19,6 +19,12 @@ def add_comment(tx, content):
 def add_rating(tx, rate):
     tx.run("CREATE (p:Rating { rate: $rate}) ", rate=rate)
 
+
+# Add new comprehension level
+def add_comprehension(tx, title, person, comprehension):
+    tx.run("MATCH (a:User), (m:Resources) WHERE a.name = $person AND m.title = $title CREATE (a)-[:COMPREHENSION {Comprehension: $comprehension}]->(m) RETURN a, m", person=person, title=title, comprehension = comprehension)
+
+
 # Add new understanding level. (Should be pre-defined in the db when db is created)
 def add_understanding_level(tx, level):
     tx.run("CREATE (p:Understanding_level { level: $level}) ", level = level)
@@ -43,6 +49,8 @@ def create_relationship_RATE(tx, person, rate):
 
 def create_relationship_RATE_DIRECTED_TO(tx, rate, title):
     tx.run("MATCH (a:Rating), (m:Resources) WHERE a.rate = $rate AND m.title = $title CREATE (a)-[:DIRECTED]->(m) RETURN a, m", rate=rate, title=title)
+
+''' Need to change so that rating is an attribute in the relationship (don't need to have nodes for rating 1-5)'''
 
 def create_relationship_COMMENT(tx, person, content):
     tx.run("MATCH (a:User), (m:Comment) WHERE a.name = $person AND m.content = $content CREATE (a)-[:COMMENT]->(m) RETURN a, m", person=person, content=content)
@@ -107,28 +115,34 @@ def find_relationship(tx, action=None, person=None, title=None, rate=0, content=
         result = tx.run("MATCH (l:Understanding_level), (r:Resources) WHERE l.level= $level AND r.title = $title MATCH (l)-[:LEVEL]->(r) RETURN r.title, l.level", title=title, level=level) 
     return result.value()
 
-
-# def search(tx, language, level, tag): 
-#     resources = []
-#     for i in tag:
-#         result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) WHERE l.language= $language WITH r MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) WHERE t.level= $level WITH r MATCH (r:Resources)<-[:TAGGED]-(t:Tag) WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = i) 
-#         print(result.value()) 
-#     return result.value()
-
+# Displays results relating to tags
 def search(tx, language, level, tag): 
     resources = []
     for a in tag:
-        result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) WHERE l.language= $language WITH r MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) WHERE t.level= $level WITH r MATCH (r:Resources)<-[:TAGGED]-(t:Tag) WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = a)
+        result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) "
+        "WHERE l.language= $language WITH r "
+        "MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) "
+        "WHERE t.level= $level WITH r "
+        "MATCH (r:Resources)<-[:TAGGED]-(t:Tag) "
+        "WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = a)
         for i in result:
             add = True
             for j in resources:
                 if (i["resource"].get("link") == j.get("link")):
-                    # print(i["resource"].get("link"))
-                    # print(j.get("link"))
                     add = False
             if (add == True):        
                 resources.append(i["resource"])
     return resources
+
+# returns the tags of a resource
+def get_tags(tx, resource):
+    results = tx.run("MATCH (r:Resources {title: $resource}) <-[:TAGGED]-(tag) RETURN tag", resource = resource)
+    return results.value()
+
+''' TODO: figure out how to get comprehension and rating depending on what level is selected'''
+''' TODO: add funtion to retrieve comprension'''
+''' TODO: add funtion to retrieve rating'''
+''' TODO: add funtion to retrieve level'''
 
 #-------------------------------------------------------------- Process API Request ---------------------------------------------------------------------------------#
 def init_db(session): 
@@ -284,13 +298,15 @@ with driver.session() as session:
     # process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
     
 
-    tags = ["Native", "Funny", "Conversation"]
-    resources = session.read_transaction(search, "French", "Intermediate 2", tags)
+    # tags = ["Native", "Funny", "Conversation"]
+    # resources = session.read_transaction(search, "French", "Intermediate 2", tags)
 
-    for resource in resources:
-        print(resource.get("title"))
+    # for resource in resources:
+    #     print(resource.get("title"))
 
-
+    # tags = session.read_transaction(get_tags, "The French Describe Their Weekend | Easy French 116")
+    # for t in tags:
+    #     print(t)
 
 driver.close()
 
