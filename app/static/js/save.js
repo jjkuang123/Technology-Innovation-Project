@@ -7,4 +7,4 @@ function save(sourceElem, resourceID, imageURL) {
     }).fail(function() {
         $(sourceElem).text("'Error: Could not save resource.'");
     });
-}
+};

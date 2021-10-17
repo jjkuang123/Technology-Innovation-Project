@@ -1,0 +1,18 @@
+<div id="like">
+	<input type="range" id="points" name="points" value="0" min="0" max="5" oninput="rate(output_like{{ resource.id }}, value, {{ resource.id }}, 'like')">
+	<output id="output_like{{ resource.id }}">0</output>/5
+</div>
+
+<div id="understanding">
+	<input type="range" id="points" name="points" value="0" min="0" max="100" oninput="rate(output_understanding{{ resource.id }}, value, {{ resource.id }}, 'understanding')">
+	<output id="output_understanding{{ resource.id }}">0</output>/100%
+</div>
+
+{# 
+
+	For the >0< we have to use the user's default value, meaning we have to query the database and if the
+	user has a value for that resource it should be displayed there.
+
+	Probably something like `current_user.get_like(resource.id)`
+
+ #}
