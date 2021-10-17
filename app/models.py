@@ -55,8 +55,6 @@ def create_relationship_RATE(tx, person, rate):
 def create_relationship_RATE_DIRECTED_TO(tx, rate, title):
     tx.run("MATCH (a:Rating), (m:Resources) WHERE a.rate = $rate AND m.title = $title CREATE (a)-[:DIRECTED]->(m) RETURN a, m", rate=rate, title=title)
 
-''' Need to change so that rating is an attribute in the relationship (don't need to have nodes for rating 1-5)'''
-
 def create_relationship_COMMENT(tx, person, content):
     tx.run("MATCH (a:User), (m:Comment) WHERE a.name = $person AND m.content = $content CREATE (a)-[:COMMENT]->(m) RETURN a, m", person=person, content=content)
 
@@ -163,10 +161,9 @@ def get_insight(tx, resource):
     results = tx.run("MATCH (p:User)-[a:INSIGHT]->(r:Resources{title: $resource}) RETURN a", resource = resource)
     return results.value()
 
-def add_insight(tx, username, rating, understanding_level, comprehension, title):
-    tx.run("MATCH (a:User), (m:Resources) WHERE a.name = $username AND m.title = $title CREATE (a)-[:INSIGHT {Understanding_level: $level, Usefulness: $rating, Comprehension: $comprehension}]->(m) RETURN a, m", 
-            username=username, title=title, comprehension = comprehension, rating= rating, level = understanding_level)
-
+def get_comments(tx, resource):
+    results = tx.run("MATCH (p:User)-[a:COMMENT]->(r:Resources{title: $resource}) RETURN a, p", resource = resource)
+    return results.value()
 
 ''' TODO: add funtion to retrieve rating'''
 ''' TODO: add funtion to retrieve level'''
@@ -325,7 +322,7 @@ with driver.session() as session:
     # process_assign_language(session, '2 Hours of English Conversation Practice - Improve Speaking Skills', 'English')
     # process_assign_language(session, 'The French Describe Their Weekend | Easy French 116', 'French')
 
-    process_add_insight(session, "Leon Wu", 'The French Describe Their Weekend | Easy French 116', 3, 200, "Intermediate 3")
+    # process_add_insight(session, "Leon Wu", 'The French Describe Their Weekend | Easy French 116', 3, 200, "Intermediate 3")
 
 
     # process_add_level(session, "Intermediate 1", '2 Hours of English Conversation Practice - Improve Speaking Skills')
@@ -342,7 +339,7 @@ with driver.session() as session:
     # for resource in resources:
     #     print(resource)
 
-    # print(session.read_transaction(get_insight, "The French Describe Their Weekend | Easy French 116"))
+    # print(session.read_transaction(get_comments, "The French Describe Their Weekend | Easy French 116"))
 
     # tags = session.read_transaction(get_tags, "The French Describe Their Weekend | Easy French 116")
     # for t in tags:
