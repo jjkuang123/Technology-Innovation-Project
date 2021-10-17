@@ -9,6 +9,7 @@ python-dotenv = "*"
 neo4j = "*"
 py2neo = "*"
 flask-wtf = "*"
+flask-cors = "*"
 
 [dev-packages]
 
