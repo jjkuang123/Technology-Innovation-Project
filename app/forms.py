@@ -3,6 +3,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.fields.html5 import IntegerRangeField
 from wtforms.validators import DataRequired
+from app.view_model import Query
 
 
 class NavigationForm(FlaskForm):
@@ -23,5 +24,5 @@ def return_search_query(form: NavigationForm) -> str:
     searchResult = form.searchfield.data
     level = form.level.data
     language = form.language.data
-    query = f"{searchResult}?&={level}?&={language}"
-    return query
+    query = Query(searchResult, level, language)
+    return query.get_my_query()

@@ -15,14 +15,16 @@ def add_resource():
     # 2. if it exists you do user related stuff
     # (user has rated, added to repository)
     resource_id = request.form['resource_id']
-    resource_like = request.form['like']
-    resource_usefulness = request.form['usefulness']
-    resource_link = request.form['link']
+    resource_understanding = request.form['resource_understanding']
+    resource_like = request.form['resource_like']
+    resource_link = request.form['resource_link']
+    resource_tags = request.form['resource_tags']
     current_app.logger.info(f"""Saving resource with
                                 ID: {resource_id}
+                                Understanding: {resource_understanding}
                                 Like: {resource_like}
-                                Use: {resource_usefulness}
                                 Link: {resource_link}
+                                Tags: {resource_tags}
                              """)
     success = True
     # Return a small success/fail message
@@ -55,10 +57,10 @@ def rate_resource():
     if request.form['rate_type'] == "like":
         resource_rate_type = "like"
     else:
-        resource_rate_type = "usefulness"
+        resource_rate_type = "understanding"
     current_app.logger.info(f"""Saving resource with
                                 ID: {resource_id}
-                                Like: {resource_rate}
+                                Rate: {resource_rate}
                                 Type: {resource_rate_type}
                              """)
     success = True

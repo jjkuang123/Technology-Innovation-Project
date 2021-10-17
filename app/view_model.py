@@ -12,7 +12,7 @@ class Resource():
         # Logic for getting a rating based on a level
         return 78
 
-    def get_usefulness(self, level) -> int:
+    def get_like(self, level) -> int:
         # Logic for getting a usefulness on a level
         return 3
 
@@ -44,3 +44,33 @@ class Video(Resource):
             response_text = response.read()
             data = json.loads(response_text.decode())
         return data['title']
+
+
+class Query():
+    def __init__(self, searchResult, level, language):
+        self.searchResult = searchResult
+        self.level = level
+        self.language = language
+
+    def encode_url(self, searchResult, level, language):
+        return f"{searchResult}?&={level}?&={language}"
+
+    # def decode_url(self, url):
+    #     decoder = url.split("?&=")
+    #     searchResult = decoder[0]
+    #     level = decoder[1]
+    #     language = decoder[2]
+
+    #     return Query(searchResult, level, language)
+
+    def get_my_query(self):
+        return self.encode_url(self.searchResult, self.level, self.language)
+
+
+def decode_url(url):
+        decoder = url.split("?&=")
+        searchResult = decoder[0]
+        level = decoder[1]
+        language = decoder[2]
+
+        return Query(searchResult, level, language)

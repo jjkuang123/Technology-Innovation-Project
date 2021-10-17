@@ -11,14 +11,14 @@ def add():
         language = form.language.data
         level = form.level.data
         understanding = form.understanding.data
-        usefulness = form.usefulness.data
+        like = form.like.data
         link = form.link.data
         current_app.logger.info(f"""
                                 Tag: {tags}
                                 Lng: {language}
                                 Lvl: {level}
                                 Und: {understanding}
-                                Use: {usefulness}
+                                Use: {like}
                                 Lnk: {link}
                                 """)
 

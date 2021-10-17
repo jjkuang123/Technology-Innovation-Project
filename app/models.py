@@ -298,16 +298,14 @@ with driver.session() as session:
     # process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
     
 
-    # tags = ["Native", "Funny", "Conversation"]
-    # resources = session.read_transaction(search, "French", "Intermediate 2", tags)
+    tags = ["Native", "Funny", "Conversation"]
+    resources = session.read_transaction(search, "French", "Intermediate 2", tags)
 
-    # for resource in resources:
-    #     print(resource.get("title"))
+    for resource in resources:
+        print(resource.get("title"))
 
     # tags = session.read_transaction(get_tags, "The French Describe Their Weekend | Easy French 116")
     # for t in tags:
     #     print(t)
 
 driver.close()
-
-
