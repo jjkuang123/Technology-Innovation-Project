@@ -118,29 +118,51 @@ def find_relationship(tx, action=None, person=None, title=None, rate=0, content=
 # Displays results relating to tags
 def search(tx, language, level, tag): 
     resources = []
-    for a in tag:
+    if len(tag) == 0:
         result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) "
         "WHERE l.language= $language WITH r "
-        "MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) "
-        "WHERE t.level= $level WITH r "
-        "MATCH (r:Resources)<-[:TAGGED]-(t:Tag) "
-        "WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = a)
+        "MATCH (r:Resources)<-[i:INSIGHT]-(p:User) "
+        "WHERE i.Understanding_level = $level RETURN r AS resource", language = language, level= level)
         for i in result:
-            add = True
-            for j in resources:
-                if (i["resource"].get("link") == j.get("link")):
-                    add = False
-            if (add == True):        
-                resources.append(i["resource"])
-    return resources
+                add = True
+                for j in resources:
+                    if (i["resource"].get("link") == j.get("link")):
+                        add = False
+                if (add == True):        
+                    resources.append(i["resource"])
+        return resources
+    else:
+        for a in tag:
+            result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) "
+            "WHERE l.language= $language WITH r "
+            "MATCH (r:Resources)<-[i:INSIGHT]-(p:User) "
+            "WHERE i.Understanding_level = $level WITH r "
+            "MATCH (r:Resources)<-[:TAGGED]-(t:Tag) "
+            "WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = a)
+            for i in result:
+                add = True
+                for j in resources:
+                    if (i["resource"].get("link") == j.get("link")):
+                        add = False
+                if (add == True):        
+                    resources.append(i["resource"])
+        return resources
 
 # returns the tags of a resource
 def get_tags(tx, resource):
     results = tx.run("MATCH (r:Resources {title: $resource}) <-[:TAGGED]-(tag) RETURN tag", resource = resource)
     return results.value()
 
-''' TODO: figure out how to get comprehension and rating depending on what level is selected'''
-''' TODO: add funtion to retrieve comprension'''
+# returns every "insight" relationship
+def get_insight(tx, resource):
+    results = tx.run("MATCH (p:User)-[a:INSIGHT]->(r:Resources{title: $resource}) RETURN a", resource = resource)
+    return results.value()
+
+def add_insight(tx, username, rating, understanding_level, comprehension, title):
+    tx.run("MATCH (a:User), (m:Resources) WHERE a.name = $username AND m.title = $title CREATE (a)-[:INSIGHT {Understanding_level: $level, Usefulness: $rating, Comprehension: $comprehension}]->(m) RETURN a, m", 
+            username=username, title=title, comprehension = comprehension, rating= rating, level = understanding_level)
+
+
 ''' TODO: add funtion to retrieve rating'''
 ''' TODO: add funtion to retrieve level'''
 
@@ -297,12 +319,18 @@ with driver.session() as session:
     # process_add_level(session, "Intermediate 1", '2 Hours of English Conversation Practice - Improve Speaking Skills')
     # process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
     
+    # session.read_transaction(add_tag, "Native")
 
-    # tags = ["Native", "Funny", "Conversation"]
-    # resources = session.read_transaction(search, "French", "Intermediate 2", tags)
+    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Native")
+
+
+    # tags = []
+    # resources = session.read_transaction(search, "French", "Intermediate 1", tags)
 
     # for resource in resources:
-    #     print(resource.get("title"))
+    #     print(resource)
+
+    # print(session.read_transaction(get_insight, "The French Describe Their Weekend | Easy French 116"))
 
     # tags = session.read_transaction(get_tags, "The French Describe Their Weekend | Easy French 116")
     # for t in tags:
