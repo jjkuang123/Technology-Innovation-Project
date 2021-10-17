@@ -12,8 +12,8 @@ def add_resources(tx, link, language, title):
     tx.run("CREATE (p:Resources { link: $link, language: $language, title:$title}) ", link=link, language=language, title=title)
 
 # Add new comment
-def add_comment(tx, content):
-    tx.run("CREATE (p:Comment { content: $content}) ", content=content)
+def add_comment(tx, title, person, content):
+    tx.run("MATCH (a:User), (m:Resources) WHERE a.name = $person AND m.title = $title CREATE (a)-[:COMMENT {content: $content}]->(m) RETURN a, m", person=person, title=title, content = content)
 
 # Add new rating
 def add_rating(tx, rate):
@@ -24,10 +24,15 @@ def add_rating(tx, rate):
 def add_comprehension(tx, title, person, comprehension):
     tx.run("MATCH (a:User), (m:Resources) WHERE a.name = $person AND m.title = $title CREATE (a)-[:COMPREHENSION {Comprehension: $comprehension}]->(m) RETURN a, m", person=person, title=title, comprehension = comprehension)
 
-
 # Add new understanding level. (Should be pre-defined in the db when db is created)
 def add_understanding_level(tx, level):
     tx.run("CREATE (p:Understanding_level { level: $level}) ", level = level)
+
+def add_insight(tx, username, rating, understanding_level, comprehension, title):
+    tx.run("MATCH (a:User), (m:Resources) WHERE a.name = $username AND m.title = $title CREATE (a)-[:INSIGHT {Understanding_level: $level, Usefulness: $rating, Comprehension: $comprehension}]->(m) RETURN a, m", 
+            username=username, title=title, comprehension = comprehension, rating= rating, level = understanding_level)
+
+
 
 # Add new language. (Should be pre-defined in the db when db is created)
 def add_language(tx, language):
@@ -118,13 +123,26 @@ def find_relationship(tx, action=None, person=None, title=None, rate=0, content=
 # Displays results relating to tags
 def search(tx, language, level, tag): 
     resources = []
-    for a in tag:
+    if len(tag) > 0:
+        for a in tag:
+            result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) "
+            "WHERE l.language= $language WITH r "
+            "MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) "
+            "WHERE t.level= $level WITH r "
+            "MATCH (r:Resources)<-[:TAGGED]-(t:Tag) "
+            "WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = a)
+            for i in result:
+                add = True
+                for j in resources:
+                    if (i["resource"].get("link") == j.get("link")):
+                        add = False
+                if (add == True):        
+                    resources.append(i["resource"])
+    else:
         result = tx.run("MATCH (r:Resources)<-[:LANGUAGE]-(l:Language) "
-        "WHERE l.language= $language WITH r "
-        "MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) "
-        "WHERE t.level= $level WITH r "
-        "MATCH (r:Resources)<-[:TAGGED]-(t:Tag) "
-        "WHERE t.tag CONTAINS $tag RETURN r AS resource", language = language, level= level, tag = a)
+            "WHERE l.language= $language WITH r "
+            "MATCH (r:Resources)<-[:LEVEL]-(t:Understanding_level) "
+            "WHERE t.level= $level WITH r ", language = language, level= level)
         for i in result:
             add = True
             for j in resources:
@@ -132,6 +150,7 @@ def search(tx, language, level, tag):
                     add = False
             if (add == True):        
                 resources.append(i["resource"])
+
     return resources
 
 # returns the tags of a resource
@@ -214,29 +233,40 @@ def process_add_resources_to_own_repo(session, username, title):
         print("Resources " + title + " already exist in repo.")
 
 def process_comment(session, username, content, title):
-    '''Process the add comment to resources request, check if the exact same comment has been directed to the same resources already.'''
-    comment_already_from_user = find_relationship(tx=session, action="COMMENT", person=username, title=title, content=content)
-    already_directed_to_resources = find_relationship(tx=session, action="DIRECTED_COMMENT", person=username, title=title, content=content)
+    check_comment_in_db = session.run("MATCH (p:User)-[a:COMMENT{content: $content}]->(r:Resources{title:$title}) RETURN p.name", content = content, title=title).value()
+    if len(check_comment_in_db) == 0:
+
+        session.read_transaction(add_comment, title, username, content)
+    else:
+        if check_comment_in_db[0] == username:
+            print('You have already made that comment to the resources.')
+        else:
+            session.read_transaction(add_comment, title, username, content)
+
+def process_add_insight(session, username, title, rate, comprehension, understanding_level):
+    check_insight_in_db = session.run("MATCH (p:User{name:$username})-[a:INSIGHT]->(r:Resources{title: $title}) RETURN a.Usefulness, a.Comprehension, a.Understanding_level", username = username, title = title).values()
+    
+    if len(check_insight_in_db) == 0:
+        add_insight(session, username, rate, understanding_level, comprehension, title)
+    else:
+        db_Usefulness= check_insight_in_db[0][0]
+        db_Comprehension = check_insight_in_db[0][1]
+        db_Understanding_level = check_insight_in_db[0][2]
+
+        if db_Usefulness == rate and db_Comprehension == comprehension and db_Understanding_level == understanding_level:
+            print('You have already made that insight to the resources.')
+        if db_Usefulness != rate:
+            session.run("MATCH (:User {name: $username})-[insight:INSIGHT]-(:Resources {title: $title}) SET insight.Usefulness = $rate RETURN insight", username = username, title = title, rate = rate)
+            print('changed made')
+        if db_Comprehension != comprehension:
+            session.run("MATCH (:User {name: $username})-[insight:INSIGHT]-(:Resources {title: $title}) SET insight.Comprehension = $comprehension RETURN insight", username = username, title = title, comprehension = comprehension)
+            print('changed made')
+        if db_Understanding_level != understanding_level:
+            session.run("MATCH (:User {name: $username})-[insight:INSIGHT]-(:Resources {title: $title}) SET insight.Understanding_level = $understanding_level RETURN insight", username = username, title = title, understanding_level = understanding_level)
+            print('changed made')
     
 
-    if len(comment_already_from_user) == 0 and len(already_directed_to_resources) == 0:
-        session.read_transaction(add_comment, content)
-        session.read_transaction(create_relationship_COMMENT, username, content)
-        session.read_transaction(create_relationship_COMMENT_DIRECTED_TO, content, title)
-    else:
-        print('You already made comment: ' + content + 'to resources: ' + title)
-
-def process_rate(session, username, rate, title):
-    '''Process the add rate to resources request, check if the exact same rate has been directed to the same resources already.'''
-    rate_already_from_user = find_relationship(tx=session, action="RATE", person=username, title=title, rate=rate)
-    already_directed_to_resources = find_relationship(tx=session, action="DIRECTED_RATE", person=username, title=title, rate=rate)
-
-    if len(rate_already_from_user) == 0 and len(already_directed_to_resources) == 0:
-        session.read_transaction(add_rating, rate)
-        session.read_transaction(create_relationship_RATE, username, rate)
-        session.read_transaction(create_relationship_RATE_DIRECTED_TO, rate, title)
-    else:
-        print('You already made rate: ' + str(rate) + 'to resources: ' + title)
+    
 
 def process_assign_language(session, title, language):
     '''Process the add language to resources request, check if the exact same language has been directed to the same resources already.'''
@@ -255,13 +285,6 @@ def process_add_tag(session, tag, title):
     else:
         print('Tag ' + tag + ' already assigned to ' + title )
 
-def process_add_level(session, level, title):
-    '''Process the add tag to level request, check if the exact same level has been directed to the same resources already.'''
-    level_assign_to_re = find_relationship(tx=session, title=title, action='LEVEL', level = level)
-    if len(level_assign_to_re) ==0:
-        session.read_transaction(create_relationship_LEVEL, title, level)
-    else:
-        print('Tag ' + level + ' already assigned to ' + title )
 
 # Main loop to interact with db.
 with driver.session() as session:
@@ -293,6 +316,9 @@ with driver.session() as session:
 
     # process_assign_language(session, '2 Hours of English Conversation Practice - Improve Speaking Skills', 'English')
     # process_assign_language(session, 'The French Describe Their Weekend | Easy French 116', 'French')
+
+    process_add_insight(session, "Leon Wu", 'The French Describe Their Weekend | Easy French 116', 3, 200, "Intermediate 3")
+
 
     # process_add_level(session, "Intermediate 1", '2 Hours of English Conversation Practice - Improve Speaking Skills')
     # process_add_level(session, "Intermediate 2", 'The French Describe Their Weekend | Easy French 116')
