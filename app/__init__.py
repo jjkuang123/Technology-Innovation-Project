@@ -30,12 +30,16 @@ def create_app(config_class=Config):
     from app.results import bp as results_bp
     app.register_blueprint(results_bp)
 
-    # Your repository binding 
+    # Your repository binding
     from app.repository import bp as repository_bp
     app.register_blueprint(repository_bp)
 
-    # Comments to a resource binding 
-    from app.comments import bp as comments_bp 
+    # Comments to a resource binding
+    from app.comments import bp as comments_bp
     app.register_blueprint(comments_bp)
+
+    # Api endpoints binding
+    from app.api import bp as api_bp
+    app.register_blueprint(api_bp)
 
     return app
