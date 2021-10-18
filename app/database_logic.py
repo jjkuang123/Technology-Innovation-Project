@@ -1,5 +1,6 @@
-from app.models import *
-from app.view_model import *
+from app.models import driver, search, process_add_resources_to_db
+from app.models import process_add_insight, process_add_tag
+from app.view_model import decode_url, Resource, Video
 
 
 def search_function(query):
@@ -19,13 +20,24 @@ def search_function(query):
             print(resource.get("title"))
             print(resource.get("link"))
             print(resource.get("language"))
-            # print(resource.get('<id>'))
+            print(resource.get('<id>'))
 
             # TODO: To get the id and replace with 25
-            resources.append(Video(resource.get("link")))
+            resources.append(Video(id=resource.id, link=resource.get("link")))
 
     driver.close()
 
     return resources
 
-# def add_function(Resource):
+
+def add_function(username, language, like, understanding, level, tags, resource):
+    title = resource.get_title()
+    path = resource.link
+
+    with driver.session() as session:
+        process_add_resources_to_db(session, username, title, path, language)
+        process_add_insight(session, username, title,
+                            like, understanding, level)
+        for tag in tags:
+            process_add_tag(session, tag, title)
+    driver.close()

@@ -13,34 +13,37 @@ def obtain_videoid(url):
 
 
 class Resource():
-    def __init__(self, id, link):
+    def __init__(self, link=None, id=None):
         self.id = id
         self.link = link
 
+    def get_title(self) -> str:
+        return ""
+
     def get_understanding(self, level) -> int:
         # Logic for getting a rating based on a level
-        return 78
+        return 999
 
     def get_like(self, level) -> int:
         # Logic for getting a usefulness on a level
-        return 3
+        return 777
 
     # def get_user_tags()
 
 
 class Video(Resource):
-    def __init__(self, *args):
-        super().__init__(*args)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.thumbnail = None
         self.title = None
 
-    def get_thumbnail(self):
+    def get_thumbnail(self) -> str:
         # Logic to set thumbnail if not in the database
         # extract video_id
         video_id = obtain_videoid(self.link)
         return f'http://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
 
-    def get_title(self):
+    def get_title(self) -> str:
         # Logic to get the title
 
         # need to obtain video_id from the link or just replace the url with the video link
@@ -55,6 +58,10 @@ class Video(Resource):
             response_text = response.read()
             data = json.loads(response_text.decode())
         return data['title']
+
+    def get_id(self):
+        if self.id:
+            return self.id
 
 
 class Query():
