@@ -2,11 +2,22 @@ import urllib.request
 import json
 import urllib
 import ssl
+import re
+from flask import current_app
 ssl._create_default_https_context = ssl._create_unverified_context
+
+
+def obtain_videoid(url):
+    current_app.logger.info(url)
+    regex_exp = r'(?:(?:http(?:s?):\/\/)|(?:www\.)|(?:http(?:s?):\/\/www\.))(?:youtu\.?be(?:\.com)?\/(?!oembed))(?:(?:watch\?v(?:=|%3D))|(?:v\/))?([a-z0-9_-]+)'
+    video_id = re.match(regex_exp, url)
+    return video_id
+
 
 class Resource():
     def __init__(self, id, link):
         self.id = id
+        self.link = link
 
     def get_understanding(self, level) -> int:
         # Logic for getting a rating based on a level
@@ -16,26 +27,29 @@ class Resource():
         # Logic for getting a usefulness on a level
         return 3
 
-    ## def get_user_tags() 
+    # def get_user_tags()
+
 
 class Video(Resource):
     def __init__(self, *args):
-        super(Video, self).__init__(*args)
+        super().__init__(*args)
         self.thumbnail = None
         self.title = None
 
     def get_thumbnail(self):
         # Logic to set thumbnail if not in the database
         # extract video_id
-        video_id = '8nzRXxPnlPQ'
+        video_id = obtain_videoid(self.link)
+        print(video_id)
         return f'http://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
 
     def get_title(self):
         # Logic to get the title
 
         # need to obtain video_id from the link or just replace the url with the video link
-        video_id = "8nzRXxPnlPQ" 
-        params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % video_id}
+        video_id = "8nzRXxPnlPQ"
+        params = {"format": "json",
+                  "url": "https://www.youtube.com/watch?v=%s" % video_id}
         url = "https://www.youtube.com/oembed"
         query_string = urllib.parse.urlencode(params)
         url = url + "?" + query_string
@@ -68,9 +82,9 @@ class Query():
 
 
 def decode_url(url):
-        decoder = url.split("?&=")
-        searchResult = decoder[0]
-        level = decoder[1]
-        language = decoder[2]
+    decoder = url.split("?&=")
+    searchResult = decoder[0]
+    level = decoder[1]
+    language = decoder[2]
 
-        return Query(searchResult, level, language)
+    return Query(searchResult, level, language)
