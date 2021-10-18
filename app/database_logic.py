@@ -1,8 +1,8 @@
 from flask.globals import current_app
 from app.models import driver, search, process_add_resources_to_db
 from app.models import process_add_insight, process_add_tag, process_assign_language, process_add_resources_to_own_repo
-from app.models import process_display_repo, get_resource_from_id
-from app.view_model import decode_url, Resource, Video
+from app.models import process_display_repo, get_resource_from_id, get_insight
+from app.view_model import decode_url, Video
 
 
 def search_function(query):
@@ -74,3 +74,30 @@ def obtain_user_resources(username):
 
     driver.close()
     return resources
+
+
+def obtain_resource_object(resource_id):
+    with driver.session() as session:
+        db_resource = get_resource_from_id(session, int(resource_id))
+        for resource in db_resource:
+            resource = Video(id=resource.id, link=resource.get("link"))
+            print(f"OBTAIN_RESOURCE_OBJECT {resource}")
+
+    driver.close()
+    return resource
+
+
+# def calculate_understanding(id, level):
+#     understandings = []
+#     lvl = f'Intermediate {level}'
+#     with driver.session() as session:
+#         db_resource = get_insight(session, id, lvl)
+#         for relationship in db_resource:
+#             understanding = relationship.get('Comprehension')
+
+#             understandings.append(int(understanding))
+
+#     return sum(understandings)/len(understandings)
+
+# # def calculate_understanding(id, level):
+# #     return 9999

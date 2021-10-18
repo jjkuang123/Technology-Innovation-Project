@@ -22,7 +22,7 @@ class Resource():
 
     def get_understanding(self, level) -> int:
         # Logic for getting a rating based on a level
-        return 999
+        return 9999
 
     def get_like(self, level) -> int:
         # Logic for getting a usefulness on a level
@@ -72,14 +72,6 @@ class Query():
 
     def encode_url(self, searchResult, level, language):
         return f"{searchResult}?&={level}?&={language}"
-
-    # def decode_url(self, url):
-    #     decoder = url.split("?&=")
-    #     searchResult = decoder[0]
-    #     level = decoder[1]
-    #     language = decoder[2]
-
-    #     return Query(searchResult, level, language)
 
     def get_my_query(self):
         return self.encode_url(self.searchResult, self.level, self.language)

@@ -230,9 +230,9 @@ def get_tags(tx, resource):
 # returns every "insight" relationship
 
 
-def get_insight(tx, resource):
+def get_insight(tx, id, level):
     results = tx.run(
-        "MATCH (p:User)-[a:INSIGHT]->(r:Resources{title: $resource}) RETURN a", resource=resource)
+        "MATCH (p:User)-[a:INSIGHT {Understanding_level : $level}]->(r:Resources) WHERE id(r) = $id RETURN a", id=id, level=level)
     return results.value()
 
 
