@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, current_app
 from app.add import bp
 from app.add.forms import AddResourceForm
+# from app.database_logic import add_function
 
 
 @bp.route('/add/', methods=['GET', 'POST'])
@@ -21,5 +22,7 @@ def add():
                                 Use: {like}
                                 Lnk: {link}
                                 """)
+
+        new_resource = Resource()
 
     return render_template('add/add.html', title="Add Page", form=form)

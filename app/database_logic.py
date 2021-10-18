@@ -11,7 +11,7 @@ def search_function(query):
     language = q.language
 
     # Splits the tags by commas
-    tag_array = searchResult.split(",")
+    tag_array = searchResult.lower().replace(" ", "").split(",")
 
     with driver.session() as session:
         db_resources = search(session, language, level, tag_array)
@@ -19,12 +19,13 @@ def search_function(query):
             print(resource.get("title"))
             print(resource.get("link"))
             print(resource.get("language"))
-            print(resource.get('id'))
+            # print(resource.get('<id>'))
 
             # TODO: To get the id and replace with 25
-
-            resources.append(Video(25, resource.get("link")))
+            resources.append(Video(resource.get("link")))
 
     driver.close()
 
     return resources
+
+# def add_function(Resource):
