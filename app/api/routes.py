@@ -5,7 +5,7 @@ from app.api import bp
 
 # Import Models
 from app.view_model import Video
-from app.database_logic import add_function
+from app.database_logic import add_function, add_single_resource
 
 
 # AJAX Method to save to respository
@@ -49,6 +49,9 @@ def add_resource():
 def save_resource():
     resource_id = request.form['resource_id']
     # Logic to add to database
+    # Pass the hard_coded username atm
+    username = "Leon Wu"
+    add_single_resource(username, resource_id)
     current_app.logger.info(f"Saving resource with ID: {resource_id}")
     success = True
     # Return a small success/fail message

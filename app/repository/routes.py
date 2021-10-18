@@ -5,6 +5,7 @@ from app.repository import bp
 
 # Import Models
 from app.view_model import Video
+from app.database_logic import obtain_user_resources
 
 
 @bp.route('/repository/', methods=['GET', 'POST'])
@@ -12,10 +13,9 @@ def repository():
     form = NavigationForm()
 
     # Logic for retrieving resources from the user
-    resources = [
-        Video(link='one_link_to_a_video', id=23),
-        Video(link='another_linky_link', id=52)
-    ]
+    # Ideally we would have a user linked in here and we can query according to the user
+    # For now we use a test user: "Leon Wu"
+    resources = obtain_user_resources("Leon Wu")
 
     if form.validate_on_submit():
         query = return_search_query(form)

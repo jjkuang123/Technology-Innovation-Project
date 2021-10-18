@@ -216,6 +216,12 @@ def search(tx, language, level, tag):
 # returns the tags of a resource
 
 
+def get_resource_from_id(session, id):
+    results = session.run(
+        "MATCH (r:Resources) where id(r) = $id RETURN r", id=id)
+    return results.value()
+
+
 def get_tags(tx, resource):
     results = tx.run(
         "MATCH (r:Resources {title: $resource}) <-[:TAGGED]-(tag) RETURN tag", resource=resource)
@@ -309,6 +315,13 @@ def process_add_resources_to_own_repo(session, username, title):
 
     else:
         print("Resources " + title + " already exist in repo.")
+
+
+def process_display_repo(session, username):
+    '''Process the add tag to resources request, check if the exact same tag has been directed to the same resources already.'''
+    result = session.run(
+        "MATCH (u:User{name: $username})-[a:HAS]->(r:Resources) RETURN r", username=username).value()
+    return result
 
 
 def process_comment(session, username, content, title):
