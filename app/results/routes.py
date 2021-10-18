@@ -1,6 +1,7 @@
 from flask import render_template, redirect, url_for, request, current_app
 from app.forms import NavigationForm, return_search_query
 from app.results import bp
+from app.database_logic import search_function
 
 # Data Models
 from app.view_model import Video
@@ -13,10 +14,7 @@ def results(search_query=None):
     form = NavigationForm()
 
     # Logic for retrieving the resources based on the query
-    resources = [
-        Video(89, 'link_to_youtube'),
-        Video(78, 'another_link_to_youtube')
-    ]
+    resources = search_function(search_query)
 
     if form.validate_on_submit():
         query = return_search_query(form)

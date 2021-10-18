@@ -11,8 +11,7 @@ def search():
         query = return_search_query(form)
 
         # destructure query into language and level
-        resources = search_function(query)
 
-        return redirect(url_for('results.results', search_query=query, resources=resources))
+        return redirect(url_for('results.results', search_query=query))
     return render_template('search/search.html', title="Search Page",
                            form=form)

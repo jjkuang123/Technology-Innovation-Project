@@ -10,10 +10,6 @@ def search_function(query):
     level = q.level
     language = q.language
 
-    print(searchResult)
-    print(level)
-    print(language)
-
     # Splits the tags by commas
     tag_array = searchResult.split(",")
 
@@ -23,7 +19,11 @@ def search_function(query):
             print(resource.get("title"))
             print(resource.get("link"))
             print(resource.get("language"))
-            resources.append(Video(resource.get("id"), resource.get("link")))
+            print(resource.get('id'))
+
+            # TODO: To get the id and replace with 25
+
+            resources.append(Video(25, resource.get("link")))
 
     driver.close()
 

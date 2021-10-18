@@ -8,9 +8,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def obtain_videoid(url):
-    current_app.logger.info(url)
-    regex_exp = r'(?:(?:http(?:s?):\/\/)|(?:www\.)|(?:http(?:s?):\/\/www\.))(?:youtu\.?be(?:\.com)?\/(?!oembed))(?:(?:watch\?v(?:=|%3D))|(?:v\/))?([a-z0-9_-]+)'
-    video_id = re.match(regex_exp, url)
+    video_id = re.search(r"\?v=.*", url).group().split('?v=')[1]
     return video_id
 
 
@@ -40,14 +38,13 @@ class Video(Resource):
         # Logic to set thumbnail if not in the database
         # extract video_id
         video_id = obtain_videoid(self.link)
-        print(video_id)
         return f'http://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
 
     def get_title(self):
         # Logic to get the title
 
         # need to obtain video_id from the link or just replace the url with the video link
-        video_id = "8nzRXxPnlPQ"
+        video_id = obtain_videoid(self.link)
         params = {"format": "json",
                   "url": "https://www.youtube.com/watch?v=%s" % video_id}
         url = "https://www.youtube.com/oembed"
