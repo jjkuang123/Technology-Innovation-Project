@@ -10,7 +10,7 @@ from app.database_logic import add_function
 def add():
     form = AddResourceForm()
     if form.validate_on_submit():
-        tags = form.addfield.data.lower().replace(" ", "").split(",")
+        tags = form.addfield.data
         language = form.language.data
         level = form.level.data
         understanding = int(form.understanding.data)
