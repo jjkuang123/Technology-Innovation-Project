@@ -11,6 +11,6 @@ class AddResourceForm(FlaskForm):
     level = SelectField("Level", choices=[(
         "in1", "Intermediate 1"), ("in2", "Intermediate 2")], validators=[DataRequired()])
     understanding = IntegerRangeField("Understanding")
-    usefulness = IntegerRangeField("Usefulness")
+    like = IntegerRangeField("Like")
     link = StringField("Link to resource", validators=[DataRequired()])
     submit = SubmitField("Add")

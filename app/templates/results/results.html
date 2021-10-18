@@ -25,7 +25,7 @@
                 <div class="metadata">
                     <h4> {{ resource.get_title() }} </h4>
                     <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }}% Average Comprehension </h5>
-                    <h5> Average Usefulness Rating: {{ resource.get_usefulness(1) }}/5 </h5>
+                    <h5> Average Usefulness Rating: {{ resource.get_like(1) }}/5 </h5>
                 </div>
                 <div class="content-buttons"> 
                     <a href="{{ url_for('comments.comments', resource_id=resource.id) }}">Go to comments</a>

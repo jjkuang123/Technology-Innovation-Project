@@ -330,14 +330,11 @@ with driver.session() as session:
     
     # session.read_transaction(add_tag, "Native")
 
-    # session.read_transaction(create_relationship_TAGGED, "The French Describe Their Weekend | Easy French 116", "Native")
+    tags = ["Native", "Funny", "Conversation"]
+    resources = session.read_transaction(search, "French", "Intermediate 2", tags)
 
-
-    # tags = []
-    # resources = session.read_transaction(search, "French", "Intermediate 1", tags)
-
-    # for resource in resources:
-    #     print(resource)
+    for resource in resources:
+        print(resource.get("title"))
 
     # print(session.read_transaction(get_comments, "The French Describe Their Weekend | Easy French 116"))
 
@@ -346,5 +343,3 @@ with driver.session() as session:
     #     print(t)
 
 driver.close()
-
-
