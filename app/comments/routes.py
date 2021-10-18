@@ -9,7 +9,7 @@ def comments(resource_id):
     form = NavigationForm()
 
     # Logic to query database to get resource from resource_id
-    resource = Video(89, 'link_to_youtube')
+    resource = Video(id=89, link='link_to_youtube')
 
     if form.validate_on_submit():
         query = return_search_query(form)

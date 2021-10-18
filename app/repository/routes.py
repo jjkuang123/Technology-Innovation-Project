@@ -13,8 +13,8 @@ def repository():
 
     # Logic for retrieving resources from the user
     resources = [
-        Video(23, 'one_link_to_a_video'),
-        Video(52, 'another_linky_link')
+        Video(link='one_link_to_a_video', id=23),
+        Video(link='another_linky_link', id=52)
     ]
 
     if form.validate_on_submit():

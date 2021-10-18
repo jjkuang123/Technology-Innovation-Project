@@ -2,40 +2,54 @@ import urllib.request
 import json
 import urllib
 import ssl
+import re
+from flask import current_app
 ssl._create_default_https_context = ssl._create_unverified_context
 
+
+def obtain_videoid(url):
+    video_id = re.search(r"\?v=.*", url).group().split('?v=')[1]
+    return video_id
+
+
 class Resource():
-    def __init__(self, id, link):
+    def __init__(self, link=None, id=None):
         self.id = id
+        self.link = link
+
+    def get_title(self) -> str:
+        return ""
 
     def get_understanding(self, level) -> int:
         # Logic for getting a rating based on a level
-        return 78
+        return 999
 
     def get_like(self, level) -> int:
         # Logic for getting a usefulness on a level
-        return 3
+        return 777
 
-    ## def get_user_tags() 
+    # def get_user_tags()
+
 
 class Video(Resource):
-    def __init__(self, *args):
-        super(Video, self).__init__(*args)
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
         self.thumbnail = None
         self.title = None
 
-    def get_thumbnail(self):
+    def get_thumbnail(self) -> str:
         # Logic to set thumbnail if not in the database
         # extract video_id
-        video_id = '8nzRXxPnlPQ'
+        video_id = obtain_videoid(self.link)
         return f'http://img.youtube.com/vi/{video_id}/maxresdefault.jpg'
 
-    def get_title(self):
+    def get_title(self) -> str:
         # Logic to get the title
 
         # need to obtain video_id from the link or just replace the url with the video link
-        video_id = "8nzRXxPnlPQ" 
-        params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % video_id}
+        video_id = obtain_videoid(self.link)
+        params = {"format": "json",
+                  "url": "https://www.youtube.com/watch?v=%s" % video_id}
         url = "https://www.youtube.com/oembed"
         query_string = urllib.parse.urlencode(params)
         url = url + "?" + query_string
@@ -44,6 +58,10 @@ class Video(Resource):
             response_text = response.read()
             data = json.loads(response_text.decode())
         return data['title']
+
+    def get_id(self):
+        if self.id:
+            return self.id
 
 
 class Query():
@@ -68,9 +86,9 @@ class Query():
 
 
 def decode_url(url):
-        decoder = url.split("?&=")
-        searchResult = decoder[0]
-        level = decoder[1]
-        language = decoder[2]
+    decoder = url.split("?&=")
+    searchResult = decoder[0]
+    level = decoder[1]
+    language = decoder[2]
 
-        return Query(searchResult, level, language)
+    return Query(searchResult, level, language)

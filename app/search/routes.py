@@ -10,9 +10,6 @@ def search():
     if form.validate_on_submit():
         query = return_search_query(form)
 
-        # destructure query into language and level 
-        search_function(query)
-        
         return redirect(url_for('results.results', search_query=query))
     return render_template('search/search.html', title="Search Page",
                            form=form)

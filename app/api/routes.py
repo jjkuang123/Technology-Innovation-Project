@@ -5,6 +5,7 @@ from app.api import bp
 
 # Import Models
 from app.view_model import Video
+from app.database_logic import add_function
 
 
 # AJAX Method to save to respository
@@ -26,11 +27,19 @@ def add_resource():
                                 Link: {resource_link}
                                 Tags: {resource_tags}
                              """)
-    success = True
-    # Return a small success/fail message
-    if success:
+
+    new_resource = Video(link=resource_link)
+
+    # TODO: Get active language, level from user
+    try:
+        language = 'French'
+        level = 'Intermediate 1'
+
+        add_function("Leon Wu", language, resource_like,
+                     resource_understanding, level, resource_tags, new_resource)
         r = {'success': 200}
-    else:
+    except Exception as inst:
+        print(inst)
         r = {'fail': 500}
     return jsonify(r)
 
