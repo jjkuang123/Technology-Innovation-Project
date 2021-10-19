@@ -282,6 +282,21 @@ def init_db(session):
         print('add_understanding_level added to db')
 
 
+def check_in_db(tx, link):
+    results = tx.run("MATCH (r:Resources{link: $link}) RETURN r", link=link)
+    if len(results.value()) == 0:
+        return False
+    else:
+        return True
+
+
+def find_resourcesID_with_link(session, link):
+    '''Process the add tag to resources request, check if the exact same tag has been directed to the same resources already.'''
+    result = session.run(
+        "MATCH (m:Resources) WHERE m.link = $link RETURN m", link=link).value()
+    return result[0]
+
+
 def process_add_user(session, username):
     '''Process the add user to db request, check if user already exist in the db'''
     user_exist_in_db = find_user(session, username)
