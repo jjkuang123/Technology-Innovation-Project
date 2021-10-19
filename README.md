@@ -15,11 +15,11 @@ target language they’re trying to acquire.
 
 
 ## Requirements
-Flask-Cors==3.0.10
-Flask-WTF==0.15.1
-neo4j==4.3.6
-py2neo==2021.2.3
-python-dotenv==0.19.1
+- Flask-Cors==3.0.10
+- Flask-WTF==0.15.1
+- neo4j==4.3.6
+- py2neo==2021.2.3
+- python-dotenv==0.19.1
 
 ## Installation
 This project was constructed using `pipenv` so in order to run simply install pipenv and then do the following commands inside the main folder:
