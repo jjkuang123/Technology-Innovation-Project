@@ -20,6 +20,7 @@ def calculate_understanding(id, level):
 
     return sum(understandings)/len(understandings)
 
+
 def calculate_like(id, level):
     likes = []
     lvl = f'Intermediate {level}'
@@ -30,6 +31,7 @@ def calculate_like(id, level):
             likes.append(int(usefulness))
 
     return sum(likes)/len(likes)
+
 
 def obtain_videoid(url):
     video_id = re.search(r"\?v=.*", url).group().split('?v=')[1]
@@ -101,6 +103,10 @@ class Query():
 
     def get_my_query(self):
         return self.encode_url(self.searchResult, self.level, self.language)
+
+    @staticmethod
+    def get_level(query):
+        return query.split('6%3D')[1].split('%201%3F%')[1]
 
 
 def decode_url(url):
