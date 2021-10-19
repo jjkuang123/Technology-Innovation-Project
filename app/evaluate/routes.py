@@ -1,4 +1,5 @@
-from flask import render_template, redirect, url_for, request, current_app
+from flask import render_template, redirect, url_for, current_app
+from flask import request, jsonify
 from app.forms import NavigationForm, return_search_query
 from app.evaluate.evaluate_forms import EvaluateForm
 from app.evaluate import bp
@@ -20,26 +21,35 @@ def evaluate(search_query=None):
 
     # Logic for processing que search_query
 
-    current_app.logger.info("about to validate form")
-    if form_eval.validate_on_submit():
-        current_app.logger.info("inside validated form")
-        # chosen_level = search_query
-        chosen_level = Query.get_level(search_query)
-        understanding_1 = form_eval.understanding_1.data
-        understanding_2 = form_eval.understanding_2.data
-        understanding_3 = form_eval.understanding_3.data
-        current_app.logger.info(
-            f"{understanding_1}, {understanding_2}, {understanding_3}")
-
-        # Used to determine the level of the user
-        get_appropriate_level(understanding_1, understanding_2,
-                              understanding_3, int(chosen_level))
-
-        # Logic for rating level based on understandings
-        resources = search_function(search_query)[:3]
+    # Logic for rating level based on understandings
+    resources = search_function(search_query)[:3]
+    chosen_level = Query.get_level(search_query)
 
     return render_template('evaluate/evaluate.html',
-                           title="Evaluate Level", form=form, form_eval=form_eval, resources=resources)
+                           title="Evaluate Level", form=form,
+                           form_eval=form_eval,
+                           chosen_level=chosen_level,
+                           resources=resources)
+
+
+@bp.route('/evaluate/get_understanding', methods=['POST'])
+def get_understanding():
+
+    chosen_level = int(request.form['chosenLevel'])
+    understanding_1 = int(request.form['understanding1'])
+    understanding_2 = int(request.form['understanding2'])
+    understanding_3 = int(request.form['understanding3'])
+
+    current_app.logger.info(
+        f"{chosen_level} {understanding_1} {understanding_2} {understanding_3}")
+
+    # Used to determine the level of the user
+    level = get_appropriate_level(understanding_1, understanding_2,
+                                  understanding_3, int(chosen_level))
+
+    r = {'level': level}
+
+    return jsonify(r)
 
 
 def get_appropriate_level(under1, under2, under3, chosen_level):

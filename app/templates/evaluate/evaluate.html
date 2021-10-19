@@ -7,19 +7,6 @@
 {% block content %}
 	<div class="top-container">
 		<img id="logo" src="/static/images/logo.png" alt="logo">
-{# 		<input type="text" id="search-input" name="search" value="">
-        <select name="languages" id="language-select">
-            <option value="French">French</option>
-            <option value="Spanish">Spanish</option>
-            <option value="Mandarin">Mandarin</option>
-            <option value="English">English</option>
-        </select>
-        <select name="skill-level" id="level-select">
-            <option value="Interm1">Intermediate 1</option>
-            <option value="Interm2">Intermediate 2</option>
-            <option value="Interm3">Intermediate 3</option>
-        </select>
-        <button> Search </button> #}
         <form action="" method="POST" novalidate="">
             {{ form.hidden_tag() }}
             {{ form.searchfield(id="search-input") }}
@@ -32,30 +19,28 @@
 	<div class="middle-container">
         <h1>Rate these videos according to your level of comprehension: </h1>
         <!-- The following html is a 'component' for a row of a resource   -->
-        <form action="" method="POST">
-            {{ form_eval.hidden_tag() }}
-            {% for resource in range(1, 4) %} {# For loop #}
-        		<div class="content-container">
-                    <img id="resource-thumb" src="/static/images/testthumbnail.jpeg" alt="testthumbnail">
-                    <div class="metadata">
-                        <h4> Comment Merkel a rate la transition ecologique del'Allemagne </h4>
-                    </div>
-                    <div class="rating-dimension"> 
-                        <h5> Your Comprehension Rating: </h5>
-                        {{ form_eval.get_understanding(resource)() }}
-                    </div>
+        {% for resource in resources %}
+    		<div class="content-container">
+                <img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail">
+                <div class="metadata">
+                    <h4> {{ resource.get_title() }} </h4>
                 </div>
-                <!-- End of component -->
-            {% endfor %}
-            <div class="level-present">
-                <div class="bottom-container">
-                    {{ form_eval.submit() }}
+                <div class="rating-dimension"> 
+                    <h5> Your Comprehension Rating: </h5>
+                    {% include 'subtemplates/_evaluate_rating.html' %}
                 </div>
-                <h3> Recommended level is: </h3>
-                <h3> { } </h3>
             </div>
-        </form>
+            <!-- End of component -->
+        {% endfor %}
+        <div class="level-present">
+            <div class="bottom-container">
+                <button onclick="get_understanding(appropriate_level, {{ chosen_level }}, input_{{ resources[0].id }}, input_{{ resources[1].id }}, input_{{ resources[2].id }})">Tell me my level</button>
+            </div>
+            <h3> Recommended level is: </h3>
+            <h3 id="appropriate_level">No level defined yet</h3>
+        </div>
 	</div>
+
 
 
 
