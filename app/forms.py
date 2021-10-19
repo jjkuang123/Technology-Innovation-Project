@@ -10,9 +10,9 @@ class NavigationForm(FlaskForm):
     searchfield = StringField("Search using tags", render_kw={
                               'placeholder': 'Search for comma separated tags'}, validators=[DataRequired()])
     language = SelectField("Language", choices=[(
-        "French", "French"), ("English", "English")], validators=[DataRequired()])
+        "French", "French"), ("English", "English"), ("Mandarin", "Mandarin"), ("Spanish", "Spanish")], validators=[DataRequired()])
     level = SelectField("Level", choices=[(
-        "Intermediate 1", "Intermediate 1"), ("Intermediate 2", "Intermediate 2")], validators=[DataRequired()])
+        "Intermediate 1", "Intermediate 1"), ("Intermediate 2", "Intermediate 2"), ("Intermediate 3", "Intermediate 3")], validators=[DataRequired()])
     submit = SubmitField("Search")
 
 

@@ -1,60 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	{# css #}
-	{# default css #}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
-	{# custom page css #}
-	{% block css %}
-	{% endblock %}
-
-	{# jquery #}
-	{% block scripts %}	
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script>
-  			$SCRIPT_ROOT = {{ request.script_root|tojson }};
-		</script>
-		<script type="text/javascript" src="{{ url_for('static', filename='js/save.js') }}"></script>
-		<script type="text/javascript" src="{{ url_for('static', filename='js/rate.js') }}"></script>
-		<script type="text/javascript" src="{{ url_for('static', filename='js/understanding_rate.js') }}"></script>
-{# 		<script>
-			function save(sourceElem, resourceID) {
-    			$(sourceElem).html('<img src="{{ url_for('static', filename='images/loading.gif') }}">');
-    			$.post('/save_resource', {
-        			resource_id: resourceID
-    			}).done(function(response) {
-        			$(sourceElem).html('saved')
-    			}).fail(function() {
-        			$(sourceElem).text("'Error: Could not save resource.'");
-    			});
-			}
-		</script> #}
-	{% endblock %}
-
-	{# title #}
-	{% if title %}
-	<title>{{ title }} - OpenLingo</title>
-	{% else %}
-	<title>Welcome to OpenLingo</title>
-	{% endif %}
-
-</head>
-<body>
-
-	<nav>
-		<a href="{{ url_for('main.index') }}">Index Page</a>
-		<a href="{{ url_for('search.search') }}">Search Page</a>
-		<a href="{{ url_for('add.add') }}">Add Page</a>
-		<a href="{{ url_for('identify.identify') }}">Identify Skill Level</a>
-		<a href="{{ url_for('results.results') }}">Results Page</a>
-		<a href="{{ url_for('repository.repository') }}">User Repository</a>
-		<a href="{{ url_for('evaluate.evaluate') }}">Evalaute Level</a>
-		{# <a href="{{ url_for('comments.comments') }}">Comments for :</a> #}
-	</nav>
-	{% block content %}
-	{% endblock %}
-</body>
+    {# css #} {# default css #}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/base.css') }}"
+    />
+    {# custom page css #} {% block css %} {% endblock %} {# jquery #} {% block
+    scripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+      $SCRIPT_ROOT = {{ request.script_root|tojson }};
+    </script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/save.js') }}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/rate.js') }}"
+    ></script>
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/understanding_rate.js') }}"
+    ></script>
+    {% endblock %} {# title #} {% if title %}
+    <title>{{ title }} - OpenLingo</title>
+    {% else %}
+    <title>Welcome to OpenLingo</title>
+    {% endif %}
+  </head>
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('main.index') }}">Index Page</a></li>
+      <li><a href="{{ url_for('search.search') }}">Search Page</a></li>
+      <li><a href="{{ url_for('add.add') }}">Add Page</a></li>
+      <li>
+        <a href="{{ url_for('identify.identify') }}">Identify Skill Level</a>
+      </li>
+      <li><a href="{{ url_for('results.results') }}">Results Page</a></li>
+      <li>
+        <a href="{{ url_for('repository.repository') }}">User Repository</a>
+      </li>
+      <li><a href="{{ url_for('evaluate.evaluate') }}">Evalaute Level</a></li>
+    </ul>
+  </nav>
+  <body>
+    {% block content %} {% endblock %}
+  </body>
 </html>
