@@ -4,8 +4,32 @@ import urllib
 import ssl
 import re
 from flask import current_app
+from app.models import *
 ssl._create_default_https_context = ssl._create_unverified_context
 
+
+def calculate_understanding(id, level):
+    understandings = []
+    lvl = f'Intermediate {level}'
+    with driver.session() as session:
+        db_resource = get_insight(session, id, lvl)
+        for relationship in db_resource:
+            understanding = relationship.get('Comprehension')
+
+            understandings.append(int(understanding))
+
+    return sum(understandings)/len(understandings)
+
+def calculate_like(id, level):
+    likes = []
+    lvl = f'Intermediate {level}'
+    with driver.session() as session:
+        db_resource = get_insight(session, id, lvl)
+        for relationship in db_resource:
+            usefulness = relationship.get('Usefulness')
+            likes.append(int(usefulness))
+
+    return sum(likes)/len(likes)
 
 def obtain_videoid(url):
     video_id = re.search(r"\?v=.*", url).group().split('?v=')[1]
@@ -22,11 +46,13 @@ class Resource():
 
     def get_understanding(self, level) -> int:
         # Logic for getting a rating based on a level
-        return 9999
+        understanding = calculate_understanding(self.id, level)
+        return understanding
 
     def get_like(self, level) -> int:
         # Logic for getting a usefulness on a level
-        return 777
+        likes = calculate_like(self.id, level)
+        return likes
 
     # def get_user_tags()
 
