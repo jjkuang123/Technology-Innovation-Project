@@ -35,7 +35,7 @@ def add_resource():
         language = 'French'
         level = 'Intermediate 1'
 
-        add_function("Leon Wu", language, resource_like,
+        add_function("Sandon Lai", language, resource_like,
                      resource_understanding, level, resource_tags, new_resource)
         r = {'success': 200}
     except Exception as inst:
@@ -72,7 +72,7 @@ def save_resource():
     resource_id = request.form['resource_id']
     # Logic to add to database
     # Pass the hard_coded username atm
-    username = "Leon Wu"
+    username = "Sandon Lai"
     add_single_resource(username, resource_id)
     current_app.logger.info(f"Saving resource with ID: {resource_id}")
     success = True

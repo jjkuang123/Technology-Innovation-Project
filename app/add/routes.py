@@ -27,7 +27,7 @@ def add():
 
         new_resource = Video(link=link)
 
-        add_function("Leon Wu", language, like,
+        add_function("Sandon Lai", language, like,
                      understanding, level, tags, new_resource)
 
         # current_app.logger.info("Added new resource to the database.")

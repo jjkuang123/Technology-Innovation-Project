@@ -15,7 +15,7 @@ def repository():
     # Logic for retrieving resources from the user
     # Ideally we would have a user linked in here and we can query according to the user
     # For now we use a test user: "Leon Wu"
-    resources = obtain_user_resources("Leon Wu")
+    resources = obtain_user_resources("Sandon Lai")
 
     if form.validate_on_submit():
         query = return_search_query(form)
