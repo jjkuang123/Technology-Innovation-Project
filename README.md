@@ -32,3 +32,6 @@ This will set up the project, next to run it you have to do:
 1. `flask run`
 
 This command will run the website in your `localhost` in `port 5000` so make sure it is not being used.
+
+## Browser extension
+We have built a browser extension that relies on CORS communication with the server, you can find it here: [OpenLingo Browser extension](https://github.com/sandonl/openlingo-browser-extension)
