@@ -1,3 +1,37 @@
 h1 {
   color: green;
 }
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: inline;
+}
+
+nav {
+  height: 30px;
+}
+
+input[type="submit"],
+a,
+button {
+  padding: 8px 16px;
+  border-radius: 18px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+input[type="submit"]:hover,
+a:hover,
+button:hover {
+  background-color: rgb(177, 227, 190);
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(0.25em);
+}

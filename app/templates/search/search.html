@@ -21,13 +21,13 @@
 				<div class="option-container">
 					{{ form.language(id="language-select") }}
 					{{ form.level(id="level-select") }}
-					{{ form.submit }}
-
-			</div>
+					
+				</div>
 		</div>
 	</form>
 
 	<div class="bottom-container">
+		{{ form.submit }}
 		<a href="{{ url_for('add.add') }}" id="add-button">Add a new resource</a>
 	</div>
 

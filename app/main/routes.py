@@ -8,7 +8,8 @@ from app.main.main_forms import BasicForm
 @bp.route('/')
 @bp.route('/index')
 def index():
-    return render_template('main/index.html')
+    return redirect(url_for('search.search'))
+    # return render_template('main/index.html')
 
 
 @bp.route('/forms', methods=['GET', 'POST'])

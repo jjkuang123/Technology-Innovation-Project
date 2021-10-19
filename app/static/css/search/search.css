@@ -25,6 +25,7 @@ input[type="submit"] {
   background-color: black;
   color: white;
   font-size: 16px;
+  width: 340px;
 }
 
 input[type="submit"]:hover {
@@ -33,7 +34,7 @@ input[type="submit"]:hover {
   transform: translateY(0.25em);
 }
 
-a {
+/* a {
   padding: 8px 16px;
   border-radius: 18px;
   border: none;
@@ -47,7 +48,7 @@ a:hover {
   background-color: rgb(177, 227, 190);
   box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
   transform: translateY(0.25em);
-}
+} */
 
 .logo-container {
   width: auto;
@@ -95,8 +96,21 @@ a:hover {
 #add-button {
   /* margin-top: 30px; */
   justify-self: center;
-  width: 340px;
+  width: 200px;
   margin: 0 auto;
   margin-top: 30px;
   text-align: center;
+  padding: 8px 16px;
+  border-radius: 18px;
+  border: none;
+  background-color: rgb(61, 61, 61);
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+#add-button:hover {
+  background-color: rgb(177, 227, 190);
+  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+  transform: translateY(0.25em);
 }
