@@ -5,7 +5,7 @@ from app.api import bp
 
 # Import Models
 from app.view_model import Video
-from app.database_logic import add_function, add_single_resource
+from app.database_logic import add_function, add_single_resource, obtain_resource_rating
 
 
 # AJAX Method to save to respository
@@ -38,6 +38,28 @@ def add_resource():
         add_function("Leon Wu", language, resource_like,
                      resource_understanding, level, resource_tags, new_resource)
         r = {'success': 200}
+    except Exception as inst:
+        print(inst)
+        r = {'fail': 500}
+    return jsonify(r)
+
+# AJAX Method to get a resource in the respository
+
+
+@bp.route('/get_rating', methods=['POST'])
+def get_resource():
+    # logic to check if this link is already in our DB
+    resource_link = request.form['resource_link']
+
+    # TODO: Get active language, level from user
+    try:
+        language = 'French'
+        level = 1
+
+        rating = obtain_resource_rating(resource_link, level)
+
+        if rating != None:
+            r = {'success': 200, 'rating': rating}
     except Exception as inst:
         print(inst)
         r = {'fail': 500}
