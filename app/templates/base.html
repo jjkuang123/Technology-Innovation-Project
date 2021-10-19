@@ -33,21 +33,26 @@
     <title>Welcome to OpenLingo</title>
     {% endif %}
   </head>
-  <nav>
-    <ul>
-      <li><a href="{{ url_for('main.index') }}">Index Page</a></li>
-      <li><a href="{{ url_for('search.search') }}">Search Page</a></li>
-      <li><a href="{{ url_for('add.add') }}">Add Page</a></li>
-      <li>
-        <a href="{{ url_for('identify.identify') }}">Identify Skill Level</a>
-      </li>
-      <li><a href="{{ url_for('results.results') }}">Results Page</a></li>
-      <li>
-        <a href="{{ url_for('repository.repository') }}">User Repository</a>
-      </li>
-      <li><a href="{{ url_for('evaluate.evaluate') }}">Evalaute Level</a></li>
-    </ul>
-  </nav>
+  <div class="nav-bar">
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('search.search') }}">Search Page</a></li>
+        <li><a href="{{ url_for('add.add') }}">Add Resource</a></li>
+        <li>
+          <a href="{{ url_for('identify.identify') }}">Identify Skill Level</a>
+        </li>
+        {#
+        <li><a href="{{ url_for('results.results') }}">Results Page</a></li>
+        #}
+        <li>
+          <a href="{{ url_for('repository.repository') }}">User Repository</a>
+        </li>
+        {#
+        <li><a href="{{ url_for('evaluate.evaluate') }}">Evalaute Level</a></li>
+        #}
+      </ul>
+    </nav>
+  </div>
   <body>
     {% block content %} {% endblock %}
   </body>
