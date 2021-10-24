@@ -36,16 +36,26 @@
   <div class="nav-bar">
     <nav>
       <ul>
-        <li><a href="{{ url_for('search.search') }}">Search Page</a></li>
-        <li><a href="{{ url_for('add.add') }}">Add Resource</a></li>
         <li>
-          <a href="{{ url_for('identify.identify') }}">Identify Skill Level</a>
+          <a href="{{ url_for('search.search') }}" class="button"
+            >Search Page</a
+          >
+        </li>
+        <li>
+          <a href="{{ url_for('add.add') }}" class="button">Add Resource</a>
+        </li>
+        <li>
+          <a href="{{ url_for('identify.identify') }}" class="button"
+            >Identify Skill Level</a
+          >
         </li>
         {#
         <li><a href="{{ url_for('results.results') }}">Results Page</a></li>
         #}
         <li>
-          <a href="{{ url_for('repository.repository') }}">User Repository</a>
+          <a href="{{ url_for('repository.repository') }}" class="button"
+            >User Repository</a
+          >
         </li>
         {#
         <li><a href="{{ url_for('evaluate.evaluate') }}">Evalaute Level</a></li>

@@ -21,14 +21,14 @@
         <!-- The following html is a 'component' for a row of a resource   -->
         {% for resource in resources %}
 		<div class="content-container">
-            <img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail">
+            <a href="{{ resource.get_link()}}" class="image-link"><img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail" ></a>
             <div class="metadata">
-                <h4> {{ resource.get_title() }} </h4>
+                <a href="{{ resource.get_link()}}"><h4> {{ resource.get_title() }} </h4></a>
                 <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }}% Average Comprehension </h5>
                 <h5> Average Usefulness Rating: {{ resource.get_like(1) }}/5 </h5>
             </div>
             <div class="content-buttons"> 
-                <a href="{{ url_for('comments.comments', resource_id=resource.id) }}">Go to comments</a>
+                <a href="{{ url_for('comments.comments', resource_id=resource.id) }}" class="button">Go to comments</a>
                 <button> Unsave </button>
             </div>
         </div>

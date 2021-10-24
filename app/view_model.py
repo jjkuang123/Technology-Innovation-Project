@@ -56,6 +56,9 @@ class Resource():
         likes = calculate_like(self.id, level)
         return likes
 
+    def get_link(self) -> str:
+        return self.link
+
     # def get_user_tags()
 
 

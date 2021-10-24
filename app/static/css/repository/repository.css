@@ -28,35 +28,15 @@ select {
   margin: 0px 10px 0px 10px;
 }
 
-input[type="submit"],
-a,
-button {
-  padding: 8px 16px;
-  border-radius: 18px;
-  border: none;
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-input[type="submit"]:hover,
-a:hover,
-button:hover {
-  background-color: rgb(177, 227, 190);
-  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-  transform: translateY(0.25em);
-}
-
 p {
   margin-top: 5px;
   margin-bottom: 5px;
 }
 
-img {
+/* img {
   max-width: 100%;
   max-height: 100%;
-}
+} */
 
 .top-container {
   display: flex;
@@ -98,7 +78,7 @@ img {
 }
 
 #resource-thumb {
-  height: 90%;
+  max-height: 120px;
 }
 
 .metadata {
@@ -109,3 +89,8 @@ img {
   display: inline;
   white-space: nowrap;
 }
+
+/* .image-link {
+  max-width: auto;
+  max-height: 100px;
+} */
