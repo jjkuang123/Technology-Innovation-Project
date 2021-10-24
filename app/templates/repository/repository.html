@@ -21,7 +21,7 @@
         <!-- The following html is a 'component' for a row of a resource   -->
         {% for resource in resources %}
 		<div class="content-container">
-            <a href="{{ resource.get_link()}}" class="image-link"><img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail" ></a>
+            <img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail">
             <div class="metadata">
                 <a href="{{ resource.get_link()}}"><h4> {{ resource.get_title() }} </h4></a>
                 <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }}% Average Comprehension </h5>

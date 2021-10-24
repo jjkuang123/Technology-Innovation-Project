@@ -33,10 +33,10 @@ p {
   margin-bottom: 5px;
 }
 
-/* img {
+img {
   max-width: 100%;
   max-height: 100%;
-} */
+}
 
 .top-container {
   display: flex;
@@ -78,7 +78,7 @@ p {
 }
 
 #resource-thumb {
-  max-height: 120px;
+  height: 90%;
 }
 
 .metadata {
@@ -89,8 +89,3 @@ p {
   display: inline;
   white-space: nowrap;
 }
-
-/* .image-link {
-  max-width: auto;
-  max-height: 100px;
-} */
