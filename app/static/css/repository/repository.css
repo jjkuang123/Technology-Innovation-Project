@@ -69,16 +69,12 @@ img {
 
 /* Content Container */
 .content-container {
-  height: 130px;
+  height: 100%;
   flex-direction: row;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: nowrap;
-}
-
-#resource-thumb {
-  height: 90%;
 }
 
 .metadata {

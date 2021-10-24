@@ -21,12 +21,7 @@
         <!-- The following html is a 'component' for a row of a resource   "/static/images/testthumbnail.jpeg"-->
         {% for resource in resources %}
     		<div class="content-container">
-                <img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail">
-                <div class="metadata">
-                    <h4> {{ resource.get_title() }} </h4>
-                    <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }}% Average Comprehension </h5>
-                    <h5> Average Usefulness Rating: {{ resource.get_like(1) }}/5 </h5>
-                </div>
+                {% include 'subtemplates/_resource_container.html' %}
                 <div class="content-buttons"> 
                     <a href="{{ url_for('comments.comments', resource_id=resource.id) }}">Go to comments</a>
                     {% include 'subtemplates/_save_button.html' %}

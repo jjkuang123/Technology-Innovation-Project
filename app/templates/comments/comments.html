@@ -20,12 +20,7 @@
         <h2>Comments: </h2>
         <!-- The following html is a 'component' for a row of a resource   -->
 		<div class="content-container">
-            <img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail">
-            <div class="metadata">
-                <h4> {{ resource.get_title() }} </h4>
-                <h5> Intermediate 1 Learners on average had {{ resource.get_understanding(1) }}% Average Comprehension </h5>
-                <h5> Average Usefulness Rating: {{ resource.get_like(1) }}/5 </h5>
-            </div>
+            {% include 'subtemplates/_resource_container.html' %}
             <div class="content-buttons"> 
                 {% include 'subtemplates/_save_button.html' %}
                 {% include 'subtemplates/_rating.html' %}

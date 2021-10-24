@@ -96,10 +96,6 @@ img {
   flex-wrap: nowrap;
 }
 
-#resource-thumb {
-  height: 90%;
-}
-
 .metadata {
   white-space: nowrap;
 }
