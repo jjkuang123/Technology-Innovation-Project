@@ -1,5 +1,5 @@
 from flask.globals import current_app
-from app.models import check_in_db, driver, find_resourcesID_with_link, search, process_add_resources_to_db
+from app.models import add_comment, check_in_db, driver, find_resourcesID_with_link, get_comments, search, process_add_resources_to_db
 from app.models import process_add_insight, process_add_tag, process_assign_language, process_add_resources_to_own_repo
 from app.models import process_display_repo, get_resource_from_id, get_insight
 from app.view_model import decode_url, Video
@@ -107,3 +107,17 @@ def obtain_resource_rating(link, level):
             return calculate_understanding(id, level)
         else:
             return None
+
+
+def obtain_comments(id):
+    with driver.session() as session:
+        comments = get_comments(session, int(id))
+        current_app.logger.info(type(comments))
+        current_app.logger.info(comments)
+    return comments
+
+
+def post_comments(comment, user, id):
+    with driver.session() as session:
+        add_comment(session, id, user, comment)
+    driver.close()

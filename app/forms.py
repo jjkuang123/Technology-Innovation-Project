@@ -1,6 +1,6 @@
 from app import evaluate
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, TextAreaField
 from wtforms.fields.html5 import IntegerRangeField
 from wtforms.validators import DataRequired
 from app.view_model import Query
@@ -18,6 +18,12 @@ class NavigationForm(FlaskForm):
 
 class BasicResourceForm(NavigationForm):
     evaluate = SubmitField("Begin Evaluation")
+
+
+class CommentForm(FlaskForm):
+    comment_box = TextAreaField("Leave a comment", validators=[
+                                DataRequired()], render_kw={'class': 'comment-box'})
+    submit = SubmitField("Comment", render_kw={'class': 'comment-button'})
 
 
 def return_search_query(form: NavigationForm) -> str:

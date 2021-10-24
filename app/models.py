@@ -20,9 +20,9 @@ def add_resources(tx, link, language, title):
 # Add new comment
 
 
-def add_comment(tx, title, person, content):
+def add_comment(tx, id, person, content):
     tx.run(
-        "MATCH (a:User), (m:Resources) WHERE a.name = $person AND m.title = $title CREATE (a)-[:COMMENT {content: $content}]->(m) RETURN a, m", person=person, title=title, content=content)
+        "MATCH (a:User), (m:Resources) WHERE a.name = $person AND id(m) = $id CREATE (a)-[:COMMENT {content: $content}]->(m) RETURN a, m", person=person, id=id, content=content)
 
 # Add new rating
 
@@ -236,10 +236,10 @@ def get_insight(tx, id, level):
     return results.value()
 
 
-def get_comments(tx, resource):
+def get_comments(tx, id):
     results = tx.run(
-        "MATCH (p:User)-[a:COMMENT]->(r:Resources{title: $resource}) RETURN a, p", resource=resource)
-    return results.value()
+        "MATCH (p:User)-[a:COMMENT]->(r:Resources) WHERE id(r) = $id RETURN a.content, p.name", id=id)
+    return results.values()
 
 
 ''' TODO: add funtion to retrieve rating'''
