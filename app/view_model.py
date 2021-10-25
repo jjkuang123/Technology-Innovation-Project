@@ -8,6 +8,14 @@ from app.models import *
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
+global_user = {'user': 'Sandon Lai'}
+
+
+def set_global_user(user):
+    global_user['user'] = user
+    current_app.logger.info(f"CURRENT GLOBAL USER: {global_user} ")
+
+
 def calculate_understanding(id, level):
     understandings = []
     lvl = f'Intermediate {level}'

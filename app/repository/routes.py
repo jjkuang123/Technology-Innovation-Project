@@ -4,7 +4,7 @@ from app.forms import NavigationForm, return_search_query
 from app.repository import bp
 
 # Import Models
-from app.view_model import Video
+from app.view_model import Video, global_user
 from app.database_logic import obtain_user_resources
 
 
@@ -15,7 +15,8 @@ def repository():
     # Logic for retrieving resources from the user
     # Ideally we would have a user linked in here and we can query according to the user
     # For now we use a test user: "Leon Wu"
-    resources = obtain_user_resources("Sandon Lai")
+    resources = obtain_user_resources(global_user['user'])
+    current_app.logger.info(global_user['user'])
 
     if form.validate_on_submit():
         query = return_search_query(form)

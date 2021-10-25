@@ -1,7 +1,7 @@
 from neo4j import GraphDatabase
 
 # Connect to databse.
-driver = GraphDatabase.driver("neo4j+s://f2137041.databases.neo4j.io",
+driver = GraphDatabase.driver("neo4j+ssc://f2137041.databases.neo4j.io",
                               auth=("neo4j", "K41pkgUv2aYfHzpczs1JSrpCVeR9BDCyBG9yodgzDmc"))
 
 # Add new users

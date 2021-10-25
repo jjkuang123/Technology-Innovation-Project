@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block css %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/search/search.css') }}">
+{% endblock %}
+
+{% block content %}
+	<div class="logo-container">
+		<img id="logo" src="/static/images/logo.png" alt="logo">
+
+	</div>
+
+	<form action="" method="post" novalidate="">
+		{{ form.hidden_tag() }}
+		<div class="middle-container">
+				<div class="search-bar">
+                    {{ form.user.label }}
+                    {{ form.user() }}
+				</div>
+	
+		</div>
+		<div class="submit-container">
+			{{ form.submit }}
+		</div>
+	</form>
+
+
+
+{% endblock %}

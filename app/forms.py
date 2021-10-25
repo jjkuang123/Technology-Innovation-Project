@@ -26,6 +26,13 @@ class CommentForm(FlaskForm):
     submit = SubmitField("Comment", render_kw={'class': 'comment-button'})
 
 
+class LoginForm(FlaskForm):
+    user = SelectField(
+        "Choose your user", choices=[("Gil", "Gil"), ("Yan", "Yan"), ("Willian", "Willian"), ("Sandon Lai", "Sandon Lai"), ("Leon Wu", "Leon Wu"), ("Jero Someone", "Jero Someone"),
+                                     ("Jacky Kuang", "Jacky Kuang")], validators=[DataRequired()])
+    submit = SubmitField("Login")
+
+
 def return_search_query(form: NavigationForm) -> str:
     searchResult = form.searchfield.data
     level = form.level.data

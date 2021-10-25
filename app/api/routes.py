@@ -4,7 +4,7 @@ from app.forms import NavigationForm, return_search_query
 from app.api import bp
 
 # Import Models
-from app.view_model import Video
+from app.view_model import Video, global_user
 from app.database_logic import add_function, add_single_resource, obtain_resource_rating
 
 
@@ -35,7 +35,7 @@ def add_resource():
         language = 'French'
         level = 'Intermediate 1'
 
-        add_function("Sandon Lai", language, resource_like,
+        add_function(global_user['user'], language, resource_like,
                      resource_understanding, level, resource_tags, new_resource)
         r = {'success': 200}
     except Exception as inst:
@@ -72,7 +72,7 @@ def save_resource():
     resource_id = request.form['resource_id']
     # Logic to add to database
     # Pass the hard_coded username atm
-    username = "Sandon Lai"
+    username = global_user
     add_single_resource(username, resource_id)
     current_app.logger.info(f"Saving resource with ID: {resource_id}")
     success = True
