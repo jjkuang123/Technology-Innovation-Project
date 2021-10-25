@@ -7,7 +7,7 @@ import statistics
 
 # Data Models
 from app.database_logic import search_function
-from app.view_model import Query
+from app.view_model import Query, global_user
 
 
 @bp.route('/evaluate/', methods=['GET', 'POST'])
@@ -57,9 +57,15 @@ def get_appropriate_level(under1, under2, under3, chosen_level):
     correct_level = 70
     average = statistics.mean([under1, under2, under3])
 
+    c = chosen_level
     if average <= drop_level:
-        return chosen_level - 1
+        c = chosen_level - 1
+        if c == 0:
+            c = 1
     elif average >= correct_level:
-        return chosen_level + 1
-    else:
-        return chosen_level
+        c = chosen_level + 1
+        if c == 4:
+            c = 3
+    global_user['level'] = int(c)
+    current_app.logger.info(f'MY CURRENT LEVEL IS: {c} ')
+    return c

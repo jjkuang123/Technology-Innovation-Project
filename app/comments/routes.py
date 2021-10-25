@@ -27,4 +27,4 @@ def comments(resource_id):
 
     return render_template('comments/comments.html',
                            title="Comments Page", form=form, resource=resource,
-                           comment_form=comment_form, comments=comments)
+                           comment_form=comment_form, comments=comments, global_user=global_user)

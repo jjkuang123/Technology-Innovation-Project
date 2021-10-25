@@ -8,7 +8,7 @@ from app.models import *
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
-global_user = {'user': 'Sandon Lai'}
+global_user = {'user': 'Sandon Lai', 'level': 1}
 
 
 def set_global_user(user):
@@ -23,10 +23,13 @@ def calculate_understanding(id, level):
         db_resource = get_insight(session, id, lvl)
         for relationship in db_resource:
             understanding = relationship.get('Comprehension')
-
             understandings.append(int(understanding))
 
-    return sum(understandings) / len(understandings)
+        try:
+            c = sum(understandings) / len(understandings)
+        except:
+            c = 0
+    return c
 
 
 def calculate_like(id, level):
@@ -38,7 +41,11 @@ def calculate_like(id, level):
             usefulness = relationship.get('Usefulness')
             likes.append(int(usefulness))
 
-    return sum(likes) / len(likes)
+        try:
+            c = sum(likes) / len(likes)
+        except:
+            c = 0
+    return c
 
 
 def obtain_videoid(url):

@@ -97,6 +97,8 @@ def rate_resource():
                                 Rate: {resource_rate}
                                 Type: {resource_rate_type}
                              """)
+
+    # TODO: Add database Logic here to save the rating
     success = True
     if success:
         r = {'success': 200}

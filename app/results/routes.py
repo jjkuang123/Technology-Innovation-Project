@@ -4,7 +4,7 @@ from app.results import bp
 from app.database_logic import search_function
 
 # Data Models
-from app.view_model import Video
+from app.view_model import Video, global_user
 
 
 @bp.route('/results/', methods=['GET', 'POST'])  # Empty query
@@ -21,4 +21,4 @@ def results(search_query=None):
         return redirect(url_for('results.results', search_query=query))
 
     return render_template('results/results.html', title="Results Page",
-                           form=form, resources=resources)
+                           form=form, resources=resources, global_user=global_user)

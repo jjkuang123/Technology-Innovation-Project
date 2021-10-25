@@ -24,4 +24,4 @@ def repository():
 
     return render_template('repository/repository.html',
                            title="Your Repository", form=form,
-                           resources=resources)
+                           resources=resources, global_user=global_user)
