@@ -6,7 +6,6 @@
             <a class="button" href="{{ resource.get_link() }}">visit</a>
         </span>
         {% if not title == "Evaluate Level" %}
-            <!-- TODO: Pass in user-level into these -->
             <h5> Intermediate {{ global_user['level'] }} Learners on average had {{ resource.get_understanding(global_user['level']) }}% Average Comprehension </h5>
             <h5> Average Usefulness Rating: {{ resource.get_like(global_user['level']) }}/5 </h5>
         {% endif %}

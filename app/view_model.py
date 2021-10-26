@@ -8,7 +8,7 @@ from app.models import *
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
-global_user = {'user': 'Sandon Lai', 'level': 1}
+global_user = {'user': 'Sandon Lai', 'level': 1, 'language': 'French'}
 
 
 def set_global_user(user):
@@ -21,12 +21,16 @@ def calculate_understanding(id, level):
     lvl = f'Intermediate {level}'
     with driver.session() as session:
         db_resource = get_insight(session, id, lvl)
+        current_app.logger.info(f"db_resource: {db_resource}")
         for relationship in db_resource:
             understanding = relationship.get('Comprehension')
             understandings.append(int(understanding))
 
         try:
+            current_app.logger.info(
+                f'inside the try, understandings: {understandings}')
             c = sum(understandings) / len(understandings)
+            current_app.logger.info('after c')
         except:
             c = 0
     return c

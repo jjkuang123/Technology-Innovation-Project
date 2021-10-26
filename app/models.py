@@ -352,13 +352,13 @@ def process_comment(session, username, content, title):
             session.read_transaction(add_comment, title, username, content)
 
 
-def process_add_insight(session, username, title, rate, comprehension, understanding_level):
+def process_add_insight(session, username, id, rate, comprehension, understanding_level):
     check_insight_in_db = session.run(
-        "MATCH (p:User{name:$username})-[a:INSIGHT]->(r:Resources{title: $title}) RETURN a.Usefulness, a.Comprehension, a.Understanding_level", username=username, title=title).values()
+        "MATCH (p:User{name:$username})-[a:INSIGHT]->(r:Resources) WHERE id(r) = $id RETURN a.Usefulness, a.Comprehension, a.Understanding_level", username=username, id=id).values()
 
     if len(check_insight_in_db) == 0:
         add_insight(session, username, rate,
-                    understanding_level, comprehension, title)
+                    understanding_level, comprehension, id)
     else:
         db_Usefulness = check_insight_in_db[0][0]
         db_Comprehension = check_insight_in_db[0][1]
@@ -366,17 +366,17 @@ def process_add_insight(session, username, title, rate, comprehension, understan
 
         if db_Usefulness == rate and db_Comprehension == comprehension and db_Understanding_level == understanding_level:
             print('You have already made that insight to the resources.')
-        if db_Usefulness != rate:
+        if db_Usefulness != rate and rate != None:
             session.run(
-                "MATCH (:User {name: $username})-[insight:INSIGHT]-(:Resources {title: $title}) SET insight.Usefulness = $rate RETURN insight", username=username, title=title, rate=rate)
+                "MATCH (:User {name: $username})-[insight:INSIGHT]-(r:Resources) WHERE id(r) = $id SET insight.Usefulness = $rate RETURN insight", username=username, id=id, rate=rate)
             print('changed made')
-        if db_Comprehension != comprehension:
-            session.run("MATCH (:User {name: $username})-[insight:INSIGHT]-(:Resources {title: $title}) SET insight.Comprehension = $comprehension RETURN insight",
-                        username=username, title=title, comprehension=comprehension)
+        if db_Comprehension != comprehension and comprehension != None:
+            session.run("MATCH (:User {name: $username})-[insight:INSIGHT]-(r:Resources) WHERE id(r) = $id SET insight.Comprehension = $comprehension RETURN insight",
+                        username=username, id=id, comprehension=comprehension)
             print('changed made')
-        if db_Understanding_level != understanding_level:
-            session.run("MATCH (:User {name: $username})-[insight:INSIGHT]-(:Resources {title: $title}) SET insight.Understanding_level = $understanding_level RETURN insight",
-                        username=username, title=title, understanding_level=understanding_level)
+        if db_Understanding_level != understanding_level and understanding_level != None:
+            session.run("MATCH (:User {name: $username})-[insight:INSIGHT]-(r:Resources) WHERE id(r) = $id SET insight.Understanding_level = $understanding_level RETURN insight",
+                        username=username, id=id, understanding_level=understanding_level)
             print('changed made')
 
 

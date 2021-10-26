@@ -2,6 +2,7 @@ from flask.globals import current_app
 from app.models import add_comment, check_in_db, driver, find_resourcesID_with_link, get_comments, search, process_add_resources_to_db
 from app.models import process_add_insight, process_add_tag, process_assign_language, process_add_resources_to_own_repo
 from app.models import process_display_repo, get_resource_from_id, get_insight
+from app.models import process_add_insight
 from app.view_model import decode_url, Video
 
 
@@ -95,7 +96,7 @@ def calculate_understanding(id, level):
         for relationship in db_resource:
             understanding = relationship.get('Comprehension')
             understandings.append(int(understanding))
-    return sum(understandings)/len(understandings)
+    return sum(understandings) / len(understandings)
 
 
 def obtain_resource_rating(link, level):
@@ -107,6 +108,13 @@ def obtain_resource_rating(link, level):
             return calculate_understanding(id, level)
         else:
             return None
+
+
+def update_like_understanding(id, new_understanding, new_like, username, level):
+    lvl = f'Intermediate {level}'
+    with driver.session() as session:
+        process_add_insight(session, username, id, new_like,
+                            new_understanding, lvl)
 
 
 def obtain_comments(id):

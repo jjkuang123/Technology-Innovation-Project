@@ -1,6 +1,7 @@
 from flask import render_template, url_for, redirect, current_app, request, jsonify
 from flask import request, jsonify
 from app.forms import NavigationForm, return_search_query
+from app.database_logic import update_like_understanding
 from app.api import bp
 
 # Import Models
@@ -72,7 +73,7 @@ def save_resource():
     resource_id = request.form['resource_id']
     # Logic to add to database
     # Pass the hard_coded username atm
-    username = global_user
+    username = global_user['user']
     add_single_resource(username, resource_id)
     current_app.logger.info(f"Saving resource with ID: {resource_id}")
     success = True
@@ -99,9 +100,17 @@ def rate_resource():
                              """)
 
     # TODO: Add database Logic here to save the rating
-    success = True
-    if success:
+
+    try:
+        if resource_rate_type == 'like':
+            update_like_understanding(int(resource_id), None, int(
+                resource_rate), global_user['user'], global_user['level'])
+        else:
+            update_like_understanding(int(resource_id), int(
+                resource_rate), None, global_user['user'], global_user['level'])
+
         r = {'success': 200}
-    else:
+    except:
         r = {'fail': 500}
+
     return jsonify(r)
