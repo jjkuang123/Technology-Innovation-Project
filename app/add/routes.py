@@ -3,6 +3,7 @@ from app.add import bp
 from app.add.forms import AddResourceForm
 from app.view_model import Video
 from app.database_logic import add_function
+from app.view_model import global_user
 # from app.database_logic import add_function
 
 
@@ -27,7 +28,7 @@ def add():
 
         new_resource = Video(link=link)
 
-        add_function("Sandon Lai", language, like,
+        add_function(global_user['user'], language, like,
                      understanding, level, tags, new_resource)
 
         # current_app.logger.info("Added new resource to the database.")

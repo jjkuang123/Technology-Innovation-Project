@@ -1,0 +1,24 @@
+.generic-resource-container {
+	max-height: 100px;
+	width: 100%;
+	margin: 0.5em 1em;
+	overflow: hidden;
+	display: flex;
+}
+
+.generic-resource-container img {
+	height: 15vh;
+	margin-right: 1rem;
+}
+
+.generic-resource-container a {
+	text-decoration: none;
+	background-color: none;
+	height: -moz-fit-content;
+	height: fit-content;
+	margin: 0 1em;
+}
+
+.generic-resource-container h4 {
+	margin: 0.7em 0;
+}

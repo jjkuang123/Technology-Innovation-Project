@@ -96,10 +96,6 @@ img {
   flex-wrap: nowrap;
 }
 
-#resource-thumb {
-  height: 90%;
-}
-
 .metadata {
   white-space: nowrap;
 }
@@ -114,4 +110,18 @@ img {
   display: block;
   align-items: center;
   padding: 10px 20px 0px 20px;
+}
+
+.comment-form {
+  display: block;
+}
+
+.comment-box {
+  display: block;
+  width: 90%;
+  margin: 1rem;
+}
+
+.comment-button {
+  margin: 1rem;
 }

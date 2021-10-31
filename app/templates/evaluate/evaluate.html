@@ -21,10 +21,7 @@
         <!-- The following html is a 'component' for a row of a resource   -->
         {% for resource in resources %}
     		<div class="content-container">
-                <img id="resource-thumb" src="{{ resource.get_thumbnail() }}" alt="testthumbnail">
-                <div class="metadata">
-                    <h4> {{ resource.get_title() }} </h4>
-                </div>
+                {% include 'subtemplates/_resource_container.html' %}
                 <div class="rating-dimension"> 
                     <h5> Your Comprehension Rating: </h5>
                     {% include 'subtemplates/_evaluate_rating.html' %}

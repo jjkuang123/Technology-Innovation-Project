@@ -28,26 +28,6 @@ select {
   margin: 0px 10px 0px 10px;
 }
 
-input[type="submit"],
-a,
-button {
-  padding: 8px 16px;
-  border-radius: 18px;
-  border: none;
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-input[type="submit"]:hover,
-a:hover,
-button:hover {
-  background-color: rgb(177, 227, 190);
-  box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-  transform: translateY(0.25em);
-}
-
 p {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -89,16 +69,12 @@ img {
 
 /* Content Container */
 .content-container {
-  height: 130px;
+  height: 100%;
   flex-direction: row;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: nowrap;
-}
-
-#resource-thumb {
-  height: 90%;
 }
 
 .metadata {

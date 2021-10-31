@@ -8,17 +8,32 @@ from app.models import *
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
+global_user = {'user': 'Sandon Lai', 'level': 1, 'language': 'French'}
+
+
+def set_global_user(user):
+    global_user['user'] = user
+    current_app.logger.info(f"CURRENT GLOBAL USER: {global_user} ")
+
+
 def calculate_understanding(id, level):
     understandings = []
     lvl = f'Intermediate {level}'
     with driver.session() as session:
         db_resource = get_insight(session, id, lvl)
+        current_app.logger.info(f"db_resource: {db_resource}")
         for relationship in db_resource:
             understanding = relationship.get('Comprehension')
-
             understandings.append(int(understanding))
 
-    return sum(understandings) / len(understandings)
+        try:
+            current_app.logger.info(
+                f'inside the try, understandings: {understandings}')
+            c = sum(understandings) / len(understandings)
+            current_app.logger.info('after c')
+        except:
+            c = 0
+    return c
 
 
 def calculate_like(id, level):
@@ -30,7 +45,11 @@ def calculate_like(id, level):
             usefulness = relationship.get('Usefulness')
             likes.append(int(usefulness))
 
-    return sum(likes) / len(likes)
+        try:
+            c = sum(likes) / len(likes)
+        except:
+            c = 0
+    return c
 
 
 def obtain_videoid(url):
@@ -55,6 +74,9 @@ class Resource():
         # Logic for getting a usefulness on a level
         likes = calculate_like(self.id, level)
         return likes
+
+    def get_link(self) -> str:
+        return self.link
 
     # def get_user_tags()
 

@@ -1,10 +1,11 @@
 from flask import render_template, url_for, redirect, current_app, request, jsonify
 from flask import request, jsonify
 from app.forms import NavigationForm, return_search_query
+from app.database_logic import update_like_understanding
 from app.api import bp
 
 # Import Models
-from app.view_model import Video
+from app.view_model import Video, global_user
 from app.database_logic import add_function, add_single_resource, obtain_resource_rating
 
 
@@ -35,7 +36,7 @@ def add_resource():
         language = 'French'
         level = 'Intermediate 1'
 
-        add_function("Sandon Lai", language, resource_like,
+        add_function(global_user['user'], language, resource_like,
                      resource_understanding, level, resource_tags, new_resource)
         r = {'success': 200}
     except Exception as inst:
@@ -72,7 +73,7 @@ def save_resource():
     resource_id = request.form['resource_id']
     # Logic to add to database
     # Pass the hard_coded username atm
-    username = "Sandon Lai"
+    username = global_user['user']
     add_single_resource(username, resource_id)
     current_app.logger.info(f"Saving resource with ID: {resource_id}")
     success = True
@@ -97,9 +98,19 @@ def rate_resource():
                                 Rate: {resource_rate}
                                 Type: {resource_rate_type}
                              """)
-    success = True
-    if success:
+
+    # TODO: Add database Logic here to save the rating
+
+    try:
+        if resource_rate_type == 'like':
+            update_like_understanding(int(resource_id), None, int(
+                resource_rate), global_user['user'], global_user['level'])
+        else:
+            update_like_understanding(int(resource_id), int(
+                resource_rate), None, global_user['user'], global_user['level'])
+
         r = {'success': 200}
-    else:
+    except:
         r = {'fail': 500}
+
     return jsonify(r)
